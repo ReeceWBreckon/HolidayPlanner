@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "884374554847",
+    "firebase_url": "https://fypholidayplanner.firebaseio.com",
+    "project_id": "fypholidayplanner",
+    "storage_bucket": "fypholidayplanner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884374554847:android:c9e0c013b9c87316",
+        "android_client_info": {
+          "package_name": "fyp.p4072699.holidayplanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884374554847-ps8l5s8rqc3enk1a0n2emd6prihovoru.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fyp.p4072699.holidayplanner",
+            "certificate_hash": "59e762865635d1d5c55bcbcb5f39ca36b2acf7cb"
+          }
+        },
+        {
+          "client_id": "884374554847-fq0vgcnabvja1jpin1rr85kqg6dg07ct.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD1RhlBTuh2j4it79ZQ87atCYOAHLUsVo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884374554847-fq0vgcnabvja1jpin1rr85kqg6dg07ct.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
