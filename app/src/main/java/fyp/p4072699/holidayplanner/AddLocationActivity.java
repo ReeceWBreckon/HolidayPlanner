@@ -1,18 +1,13 @@
 package fyp.p4072699.holidayplanner;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
-import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -46,14 +41,12 @@ public class AddLocationActivity extends FragmentActivity implements View.OnClic
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
                 Log.i("w", "Place: " + place.getName());
                 loc = place.getName().toString();
             }
 
             @Override
             public void onError(Status status) {
-                // TODO: Handle the error.
                 Log.i("w", "An error occurred: " + status);
             }
         });

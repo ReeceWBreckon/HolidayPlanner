@@ -13,7 +13,7 @@ import java.util.List;
 public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String databaseName = "HolidayPlanner.db";
 
-//  Holiday Table Information
+    //  Holiday Table Information
     private static final String holidayTableName = "Holiday";
     private static final String colID = "_id";
     private static final String colDateFrom = "date_from";
@@ -62,7 +62,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + holidayTableName;
         Cursor c = d.rawQuery(query, new String[]{});
 
-        if(c.moveToFirst()) {
+        if (c.moveToFirst()) {
             int l = c.getColumnIndex(colLocation);
             int to = c.getColumnIndex(colDateTo);
             int from = c.getColumnIndex(colDateFrom);
@@ -73,7 +73,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         c.getString(from)
                 );
                 hol.add(h);
-            }while (c.moveToNext());
+            } while (c.moveToNext());
         }
         return hol;
     }

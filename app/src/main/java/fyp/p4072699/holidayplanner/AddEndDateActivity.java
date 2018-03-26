@@ -9,7 +9,7 @@ import android.widget.DatePicker;
 
 import java.util.ArrayList;
 
-public class AddEndDateActivity extends AppCompatActivity implements View.OnClickListener{
+public class AddEndDateActivity extends AppCompatActivity implements View.OnClickListener {
     private DatePicker endDate;
     private int day, month, year;
     private Button next, cancel, ret;

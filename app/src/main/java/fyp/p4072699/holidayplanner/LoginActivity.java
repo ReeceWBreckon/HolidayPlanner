@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,8 +27,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         login = findViewById(R.id.button_login);
         signup = findViewById(R.id.button_signup);
-        em = (EditText)findViewById(R.id.editText_e);
-        pa = (EditText)findViewById(R.id.editText_p);
+        em = (EditText) findViewById(R.id.editText_e);
+        pa = (EditText) findViewById(R.id.editText_p);
         forgot = findViewById(R.id.button_forgot);
         auth = FirebaseAuth.getInstance();
 

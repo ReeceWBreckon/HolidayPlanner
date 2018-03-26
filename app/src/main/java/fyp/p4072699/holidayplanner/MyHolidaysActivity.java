@@ -32,8 +32,7 @@ public class MyHolidaysActivity extends AppCompatActivity implements View.OnClic
         holidays = new ArrayList<Holiday>();
         holidays = dbh.getHolidays();
 
-        for (Holiday h : holidays)
-        {
+        for (Holiday h : holidays) {
             hol = Arrays.copyOf(hol, hol.length + 1);
             hol[hol.length - 1] = "Location: " + h.getLocation()
                     + "\nDate From: " + h.getDateFrom()
