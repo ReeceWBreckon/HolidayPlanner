@@ -11,6 +11,10 @@ public class Holiday {
         dateTo = to;
     }
 
+    public Holiday() {
+
+    }
+
     public String getLocation() {
         return location;
     }
