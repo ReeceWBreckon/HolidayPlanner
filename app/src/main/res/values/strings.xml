@@ -11,6 +11,7 @@
     <!--Home Screen-->
     <string name="add_holiday">Add Holiday</string>
     <string name="view_holidays">View Holidays</string>
+    <string name="destinations">Destinations</string>
 
     <!--Login Screen-->
     <string name="Login">Login</string>
@@ -35,5 +36,7 @@
     <string name="location">Location</string>
     <string name="ret">Return</string>
     <string name="add_location">Add Location</string>
+    <string name="add_start_date">Add Start Date</string>
+    <string name="add_end_date">Add End Date</string>
 
 </resources>

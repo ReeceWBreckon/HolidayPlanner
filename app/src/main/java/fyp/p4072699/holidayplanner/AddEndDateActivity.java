@@ -20,6 +20,7 @@ public class AddEndDateActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_end_date);
+        setTitle(R.string.add_end_date);
 
         i = getIntent();
         details = i.getIntegerArrayListExtra("Details");

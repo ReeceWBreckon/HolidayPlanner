@@ -9,13 +9,14 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
 
-public class AddLocationActivity extends FragmentActivity implements View.OnClickListener {
+public class AddLocationActivity extends AppCompatActivity implements View.OnClickListener {
     private Button next, cancel, ret;
     private ArrayList<Integer> details;
     private Intent i;
@@ -25,6 +26,7 @@ public class AddLocationActivity extends FragmentActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
+        setTitle(R.string.add_location);
 
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);

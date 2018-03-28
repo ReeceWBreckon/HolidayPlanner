@@ -28,6 +28,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        setTitle(R.string.Sign_up);
 
         //Connect to the display
         signUp = findViewById(R.id.button_signup);

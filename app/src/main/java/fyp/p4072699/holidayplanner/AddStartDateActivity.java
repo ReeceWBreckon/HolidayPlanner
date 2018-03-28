@@ -21,13 +21,18 @@ public class AddStartDateActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_start_date);
+        setTitle(R.string.add_start_date);
 
+        //Connect to the display
         calendar = Calendar.getInstance();
         day = calendar.get(Calendar.DAY_OF_MONTH);
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
         details = new ArrayList<>();
+        next = findViewById(R.id.button_confirmstartdate);
+        cancel = findViewById(R.id.button_cancel);
 
+        //Set the calendar to todays date
         startDate = findViewById(R.id.datePicker_startdate);
         startDate.init(year, month, day, new DatePicker.OnDateChangedListener() {
             @Override
@@ -38,9 +43,7 @@ public class AddStartDateActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
-        next = findViewById(R.id.button_confirmstartdate);
-        cancel = findViewById(R.id.button_cancel);
-
+        //Add the click listeners
         next.setOnClickListener(this);
         cancel.setOnClickListener(this);
     }
@@ -49,7 +52,6 @@ public class AddStartDateActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_confirmstartdate:
-
                 details.add(day);
                 details.add(month);
                 details.add(year);

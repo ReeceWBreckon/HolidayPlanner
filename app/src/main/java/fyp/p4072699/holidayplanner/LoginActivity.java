@@ -24,7 +24,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setTitle(R.string.Login);
 
+        //Connect to the display
         login = findViewById(R.id.button_login);
         signup = findViewById(R.id.button_signup);
         em = (EditText) findViewById(R.id.editText_e);
@@ -32,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         forgot = findViewById(R.id.button_forgot);
         auth = FirebaseAuth.getInstance();
 
+        //Set the click listeners
         forgot.setOnClickListener(this);
         login.setOnClickListener(this);
         signup.setOnClickListener(this);

@@ -31,7 +31,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD4xgPlDIFiAx1kTvGBxZagsD374dmEFiQ" />
 
-        <activity android:name=".ForgotPasswordActivity"></activity>
+        <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".DestinationsActivity"></activity>
     </application>
 
 </manifest>

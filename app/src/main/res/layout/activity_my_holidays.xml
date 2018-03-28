@@ -39,7 +39,8 @@
         android:layout_marginStart="24dp"
         android:text="@string/home"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="24dp" />
 
     <Button
         android:id="@+id/button_addholiday"
@@ -49,5 +50,6 @@
         android:layout_marginEnd="24dp"
         android:text="@string/add_holiday"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginRight="24dp" />
 </android.support.constraint.ConstraintLayout>

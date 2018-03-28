@@ -29,6 +29,7 @@ public class MyHolidaysActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_holidays);
+        setTitle(R.string.my_holidays);
 
         //Connect to the display
         home = findViewById(R.id.button_returnhome);
@@ -78,6 +79,7 @@ public class MyHolidaysActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
+        //Set the click listeners
         home.setOnClickListener(this);
         add.setOnClickListener(this);
     }

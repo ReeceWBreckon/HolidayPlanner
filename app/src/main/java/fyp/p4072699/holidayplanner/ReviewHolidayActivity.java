@@ -28,6 +28,7 @@ public class ReviewHolidayActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_holiday);
+        setTitle(R.string.review_holiday);
 
         //Get the details from the previous screen
         i = getIntent();
