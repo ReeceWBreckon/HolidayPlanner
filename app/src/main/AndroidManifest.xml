@@ -32,7 +32,8 @@
             android:value="AIzaSyD4xgPlDIFiAx1kTvGBxZagsD374dmEFiQ" />
 
         <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".DestinationsActivity"></activity>
+        <activity android:name=".DestinationsActivity" />
+        <activity android:name=".DestinationDetailActivity"></activity>
     </application>
 
 </manifest>

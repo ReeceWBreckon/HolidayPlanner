@@ -39,4 +39,7 @@
     <string name="add_start_date">Add Start Date</string>
     <string name="add_end_date">Add End Date</string>
 
+    <!--Destination Screen-->
+    <string name="destination_details">Destination Details</string>
+
 </resources>

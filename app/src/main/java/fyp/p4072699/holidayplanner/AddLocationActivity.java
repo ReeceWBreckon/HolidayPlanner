@@ -28,6 +28,7 @@ public class AddLocationActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_add_location);
         setTitle(R.string.add_location);
 
+        //Connect to the display
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         i = getIntent();
@@ -36,10 +37,12 @@ public class AddLocationActivity extends AppCompatActivity implements View.OnCli
         ret = findViewById(R.id.button_return);
         details = i.getIntegerArrayListExtra("Details");
 
+        //Set the click listeners
         next.setOnClickListener(this);
         cancel.setOnClickListener(this);
         ret.setOnClickListener(this);
 
+        //Get the value from the autocomplete
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
@@ -52,7 +55,6 @@ public class AddLocationActivity extends AppCompatActivity implements View.OnCli
                 Log.i("w", "An error occurred: " + status);
             }
         });
-
     }
 
     @Override
