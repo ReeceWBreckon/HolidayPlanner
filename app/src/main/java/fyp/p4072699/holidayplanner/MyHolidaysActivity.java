@@ -42,7 +42,6 @@ public class MyHolidaysActivity extends AppCompatActivity implements View.OnClic
         //Firebase setup
         auth = FirebaseAuth.getInstance();
         fDBI = FirebaseDatabase.getInstance();
-        fDBI.getReference("app_title").setValue("Realtime Database");
 
         if (auth.getCurrentUser() != null) {
             userId = auth.getCurrentUser().getUid();

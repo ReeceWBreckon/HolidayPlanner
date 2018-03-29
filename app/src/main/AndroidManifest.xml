@@ -33,7 +33,8 @@
 
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".DestinationsActivity" />
-        <activity android:name=".DestinationDetailActivity"></activity>
+        <activity android:name=".DestinationDetailActivity" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>

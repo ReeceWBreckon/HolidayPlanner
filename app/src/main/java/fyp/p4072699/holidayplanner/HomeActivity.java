@@ -9,7 +9,7 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button addHoliday, myHolidays, signOut, destinations;
+    private Button addHoliday, myHolidays, signOut, destinations, profile;
     private FirebaseAuth auth;
 
     @Override
@@ -23,9 +23,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         myHolidays = findViewById(R.id.button_viewholidays);
         signOut = findViewById(R.id.button_signout);
         destinations = findViewById(R.id.button_destinations);
+        profile = findViewById(R.id.button_profile);
         auth = FirebaseAuth.getInstance();
 
         //Add the click listeners
+        profile.setOnClickListener(this);
         destinations.setOnClickListener(this);
         addHoliday.setOnClickListener(this);
         myHolidays.setOnClickListener(this);
@@ -47,6 +49,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button_destinations:
                 startActivity(new Intent(HomeActivity.this, DestinationsActivity.class));
+                break;
+            case R.id.button_profile:
+                startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
                 break;
         }
     }

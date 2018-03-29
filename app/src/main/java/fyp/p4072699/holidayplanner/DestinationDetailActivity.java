@@ -11,17 +11,20 @@ import android.widget.TextView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
 public class DestinationDetailActivity extends AppCompatActivity {
     private double lat, lng;
-    private String country, countryCode, baseURL, URL;
+    private String country, countryCode, baseURL, URL, capital, region, currency;
     private List<Address> location;
-    private TextView c;
+    private TextView c, cap, reg, currenc;
     private ImageView flag;
 
     @Override
@@ -34,6 +37,9 @@ public class DestinationDetailActivity extends AppCompatActivity {
         //Connect to the display
         c = findViewById(R.id.textView_country);
         flag = findViewById(R.id.imageView_flag);
+        cap = findViewById(R.id.textView_capital);
+        reg = findViewById(R.id.textView_subregion);
+        currenc = findViewById(R.id.textView_currency);
 
         //Retrieve long/lang from previous screen
         lat = getIntent().getExtras().getDouble("lat");
@@ -51,32 +57,43 @@ public class DestinationDetailActivity extends AppCompatActivity {
                     countryCode = "doo";
                 }
                 URL = baseURL + countryCode;
-
-                AsyncHttpClient client = new AsyncHttpClient();
-                client.get(URL, new AsyncHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        String s = "";
-                        try {
-                            s = new String(responseBody, "UTF-8");
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-                        Log.d("details", s); //All detials, pain to get individual
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-                    }
-                });
             }
         } catch (IOException e) {
         }
+
+        getDetails();
         c.setText(country);
         int flagid = getResources().getIdentifier(countryCode.toLowerCase(), "drawable", getPackageName());
         flag.setImageResource(flagid);
+    }
 
-        Log.d("aaaaaaa", String.valueOf(flagid));
+    private void getDetails() {
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(URL, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                JSONObject obj, co = null;
+                JSONArray curr;
+                try {
+                    obj = new JSONObject(new String(responseBody));
+                    capital = obj.getString("capital");
+                    region = obj.getString("region");
+                    curr = obj.getJSONArray("currencies");
+                    co = curr.getJSONObject(0);
+                    currency = co.getString("name");
+                    Log.d("currecnt", currency);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                cap.setText(capital);
+                reg.setText(region);
+                currenc.setText(currency);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
     }
 }

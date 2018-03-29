@@ -41,5 +41,13 @@
 
     <!--Destination Screen-->
     <string name="destination_details">Destination Details</string>
+    <string name="capital">Capital </string>
+    <string name="region">Region </string>
+    <string name="currency">Currency </string>
+    <string name="two_dots">:</string>
 
+    <!--Profile Screen-->
+    <string name="my_profile">My Profile</string>
+    <string name="change_email">Change Email</string>
+    <string name="change_password">Change Password</string>
 </resources>
