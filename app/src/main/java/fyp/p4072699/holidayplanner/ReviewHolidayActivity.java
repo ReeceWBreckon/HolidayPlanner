@@ -1,8 +1,8 @@
 package fyp.p4072699.holidayplanner;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,6 +23,7 @@ public class ReviewHolidayActivity extends AppCompatActivity implements View.OnC
     private DatabaseReference fDB;
     private FirebaseDatabase fDBI;
     private FirebaseAuth auth;
+    private double lat, lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,8 @@ public class ReviewHolidayActivity extends AppCompatActivity implements View.OnC
         i = getIntent();
         details = i.getIntegerArrayListExtra("Details");
         loc = i.getStringExtra("Location");
+        lat = getIntent().getExtras().getDouble("lat");
+        lng = getIntent().getExtras().getDouble("lng");
 
         //Connect to the display
         save = findViewById(R.id.button_save);
@@ -82,7 +85,7 @@ public class ReviewHolidayActivity extends AppCompatActivity implements View.OnC
         fDB = fDBI.getReference("holidays").child(userId);
         DatabaseReference r = fDB.push();
 
-        Holiday h = new Holiday(l, f, t);
+        Holiday h = new Holiday(l, f, t, lat, lng);
 
         r.setValue(h);
     }

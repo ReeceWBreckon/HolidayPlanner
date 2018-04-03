@@ -1,8 +1,8 @@
 package fyp.p4072699.holidayplanner;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,7 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button changeEmail, changePassword, signOut;
+    private Button changeEmail, changePassword, signOut, home;
     private TextView name, email;
     private FirebaseAuth auth;
     private FirebaseDatabase fdb;
@@ -34,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         signOut = findViewById(R.id.button_signout);
         name = findViewById(R.id.textView_name);
         email = findViewById(R.id.textView_email);
+        home = findViewById(R.id.button_home);
 
         if (auth.getCurrentUser() != null) {
             e = auth.getCurrentUser().getEmail();
@@ -58,20 +59,24 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         changePassword.setOnClickListener(this);
         changeEmail.setOnClickListener(this);
         signOut.setOnClickListener(this);
+        home.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_changeemail:
-                //create screen to change email
+                startActivity(new Intent(ProfileActivity.this, ChangeEmailActivity.class));
                 break;
             case R.id.button_changepassword:
-                //create screen to change password
+                startActivity(new Intent(ProfileActivity.this, ChangePasswordActivity.class));
                 break;
             case R.id.button_signout:
                 auth.signOut();
                 startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+                break;
+            case R.id.button_home:
+                startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
                 break;
         }
     }

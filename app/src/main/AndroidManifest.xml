@@ -34,7 +34,10 @@
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".DestinationsActivity" />
         <activity android:name=".DestinationDetailActivity" />
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ChangeEmailActivity" />
+        <activity android:name=".ChangePasswordActivity" />
+        <activity android:name=".NearHolidayActivity"></activity>
     </application>
 
 </manifest>

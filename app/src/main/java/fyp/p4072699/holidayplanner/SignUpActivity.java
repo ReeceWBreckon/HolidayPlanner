@@ -1,9 +1,9 @@
 package fyp.p4072699.holidayplanner;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -75,7 +75,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                             if (!task.isSuccessful()) {
                                 Toast.makeText(getApplicationContext(), "Sign Up Failed." + task.getException(), Toast.LENGTH_SHORT).show();
                             } else {
-                                createUser(n, e);
+                                createUser(n);
                                 startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
                                 finish();
                             }
@@ -89,12 +89,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void createUser(String name, String email) {
+    private void createUser(String name) {
         String userId = null;
         if (auth.getCurrentUser() != null) {
             userId = auth.getCurrentUser().getUid();
         }
-        User user = new User(name, email);
+        User user = new User(name);
         mFirebaseDatabase.child(userId).setValue(user);
     }
 }
