@@ -16,10 +16,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ChangeEmailActivity extends AppCompatActivity implements View.OnClickListener {
     private Button save, cancel;
-    private EditText newEmail;
+    private EditText newEmail, confEmail;
     private FirebaseAuth auth;
     private FirebaseUser u;
-    private String em;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +34,7 @@ public class ChangeEmailActivity extends AppCompatActivity implements View.OnCli
         save = findViewById(R.id.button_save);
         cancel = findViewById(R.id.button_cancel);
         newEmail = findViewById(R.id.editText_newEmail);
+        confEmail = findViewById(R.id.editText_confirmEmail);
 
         //Set the click listeners
         save.setOnClickListener(this);
@@ -43,21 +43,26 @@ public class ChangeEmailActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        em = newEmail.getText().toString();
+        String em = newEmail.getText().toString();
+        String cem = confEmail.getText().toString();
         Intent i = new Intent(ChangeEmailActivity.this, ProfileActivity.class);
         switch (view.getId()) {
             case R.id.button_save:
-                u.updateEmail(em).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(ChangeEmailActivity.this, "Email Updated.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(ChangeEmailActivity.this, "Could not update email.", Toast.LENGTH_SHORT).show();
+                if (em.equals(cem)) {
+                    u.updateEmail(em).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(ChangeEmailActivity.this, "Email Updated.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ChangeEmailActivity.this, "Could not update email.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-                startActivity(i);
+                    });
+                    startActivity(i);
+                } else {
+                    Toast.makeText(ChangeEmailActivity.this, "Emails do not match.", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.button_cancel:
                 startActivity(i);

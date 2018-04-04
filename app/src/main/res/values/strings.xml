@@ -16,13 +16,13 @@
     <!--Login Screen-->
     <string name="Login">Login</string>
     <string name="Sign_up">Sign Up</string>
-    <string name="email">E-Mail Address</string>
+    <string name="email">Email Address</string>
     <string name="password">Password</string>
     <string name="forgot_p">Forgotten your password?</string>
 
     <!--Sign Up Screen-->
     <string name="conf_password">Confirm Password</string>
-    <string name="conf_email">Confirm E-Mail</string>
+    <string name="conf_email">Confirm Email</string>
     <string name="name">Name</string>
 
     <!--Reset Password Screen-->
@@ -57,4 +57,9 @@
     <string name="near_holiday">Nearby</string>
     <string name="filter">Filter</string>
     <string name="sort_by">Sort By</string>
+
+    <!--Nearby Details Screen-->
+    <string name="place_details">Place Details</string>
+    <string name="rating">Rating</string>
+    <string name="address">Address</string>
 </resources>

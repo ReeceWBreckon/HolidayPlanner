@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener {
     private Button save, cancel;
-    private EditText newPass;
+    private EditText newPass, confPass;
     private FirebaseAuth auth;
     private FirebaseUser u;
 
@@ -34,6 +34,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         save = findViewById(R.id.button_save);
         cancel = findViewById(R.id.button_cancel);
         newPass = findViewById(R.id.editText_newPassword);
+        confPass = findViewById(R.id.editText_confirmpassword);
 
         //Set the click listeners
         save.setOnClickListener(this);
@@ -43,20 +44,25 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View view) {
         Intent i = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
-        String s = newPass.getText().toString();
+        String p = newPass.getText().toString();
+        String cp = confPass.getText().toString();
         switch (view.getId()) {
             case R.id.button_save:
-                u.updatePassword(s).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(ChangePasswordActivity.this, "Password Updated.", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(ChangePasswordActivity.this, "Unable to update password.", Toast.LENGTH_SHORT).show();
+                if (p.equals(cp)) {
+                    u.updatePassword(p).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(ChangePasswordActivity.this, "Password Updated.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(ChangePasswordActivity.this, "Unable to update password.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
-                startActivity(i);
+                    });
+                    startActivity(i);
+                } else {
+                    Toast.makeText(ChangePasswordActivity.this, "Password do not match.", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.button_cancel:
                 startActivity(i);

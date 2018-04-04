@@ -3,8 +3,8 @@ package fyp.p4072699.holidayplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -20,11 +20,11 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class NearHolidayActivity extends AppCompatActivity implements View.OnClickListener {
+public class NearHolidayActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
     private String baseURL, URL, location, radius, type, kyword, key, name, rating;
     private Button filter, sortBy, retur;
     private ListView nearbyLV;
-    private ArrayList<String> nearbyList;
+    private ArrayList<String> nearbyList, placeID;
     private ArrayAdapter ad;
 
     @Override
@@ -33,6 +33,7 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_near_holiday);
         setTitle(R.string.near_holiday);
         nearbyList = new ArrayList<>();
+        placeID = new ArrayList<>();
 
         //Connect to the display
         filter = findViewById(R.id.button_filter);
@@ -44,7 +45,6 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
 
         //set the url paramaters
         location = getIntent().getStringExtra("coords");
-        Log.d("loccccc", location);
         radius = "500";
         key = "AIzaSyDAiArIeNB9Yyqvf--VRQZQb4Vhx-37b_k";
 
@@ -59,6 +59,7 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
         filter.setOnClickListener(this);
         sortBy.setOnClickListener(this);
         retur.setOnClickListener(this);
+        nearbyLV.setOnItemClickListener(this);
     }
 
     private void getPlaces() {
@@ -78,9 +79,10 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
                         if (!results.has("rating")) {
                             rating = "Not Yet Rated";
                         } else {
-                            rating = results.getString("rating");
+                            rating = results.getString("rating") + "/5";
                         }
                         nearbyList.add("Name: " + name + "\nRating: " + rating);
+                        placeID.add(results.getString("place_id"));
                         ad.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
@@ -90,7 +92,6 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.d("lol", "lol");
             }
         });
     }
@@ -108,5 +109,12 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
 
                 break;
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        startActivity(new Intent(NearHolidayActivity.this, NearbyDetailsActivity.class)
+                .putExtra("id", placeID.get(i))
+                .putExtra("location", location));
     }
 }
