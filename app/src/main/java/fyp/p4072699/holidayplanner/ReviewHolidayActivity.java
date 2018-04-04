@@ -13,7 +13,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-
 public class ReviewHolidayActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView startDate, endDate, location;
     private ArrayList<Integer> details;

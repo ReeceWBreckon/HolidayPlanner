@@ -55,4 +55,6 @@
 
     <!--Nearby Screen-->
     <string name="near_holiday">Nearby</string>
+    <string name="filter">Filter</string>
+    <string name="sort_by">Sort By</string>
 </resources>

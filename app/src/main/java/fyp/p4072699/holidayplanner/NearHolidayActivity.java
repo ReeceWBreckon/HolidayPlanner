@@ -1,26 +1,112 @@
 package fyp.p4072699.holidayplanner;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 
-public class NearHolidayActivity extends AppCompatActivity {
-    private String baseURL, location, radius, type, kyword, key;
-    private double lat, lng;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
+
+public class NearHolidayActivity extends AppCompatActivity implements View.OnClickListener {
+    private String baseURL, URL, location, radius, type, kyword, key, name, rating;
+    private Button filter, sortBy, retur;
+    private ListView nearbyLV;
+    private ArrayList<String> nearbyList;
+    private ArrayAdapter ad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_holiday);
         setTitle(R.string.near_holiday);
+        nearbyList = new ArrayList<>();
 
+        //Connect to the display
+        filter = findViewById(R.id.button_filter);
+        sortBy = findViewById(R.id.button_sortBy);
+        retur = findViewById(R.id.button_return);
+        nearbyLV = findViewById(R.id.listView_nearby);
+        ad = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nearbyList);
+        nearbyLV.setAdapter(ad);
+
+        //set the url paramaters
+        location = getIntent().getStringExtra("coords");
+        Log.d("loccccc", location);
+        radius = "500";
         key = "AIzaSyDAiArIeNB9Yyqvf--VRQZQb4Vhx-37b_k";
 
-        //Retrieve long/lang from previous screen
-        lat = getIntent().getExtras().getDouble("lat"); //will be passed through from the holiday screen
-        lng = getIntent().getExtras().getDouble("lng");
+        baseURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
+        //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant&keyword=cruise&key=
 
-        location = String.valueOf(lat) + String.valueOf(lng);
+        getPlaces();
+        //20 places per search, up to 60 with next page token
+        //https://maps.googleapis.com/maps/api/place/nearbysearch/json?pagetoken=    "VALUE"      &key=     YOUR_API_KEY
 
-        baseURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="; //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant&keyword=cruise&key=
+        //Set the click listeners
+        filter.setOnClickListener(this);
+        sortBy.setOnClickListener(this);
+        retur.setOnClickListener(this);
+    }
+
+    private void getPlaces() {
+        URL = baseURL + location + "&radius=" + radius + "&key=" + key;
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get(URL, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                JSONObject obj, results = null;
+                JSONArray res;
+                try {
+                    obj = new JSONObject(new String(responseBody));
+                    res = obj.getJSONArray("results");
+                    for (int count = 0; count < res.length(); count++) {
+                        results = res.getJSONObject(count);
+                        name = results.getString("name");
+                        if (!results.has("rating")) {
+                            rating = "Not Yet Rated";
+                        } else {
+                            rating = results.getString("rating");
+                        }
+                        nearbyList.add("Name: " + name + "\nRating: " + rating);
+                        ad.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.d("lol", "lol");
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_return:
+                startActivity(new Intent(NearHolidayActivity.this, MyHolidaysActivity.class));
+                break;
+            case R.id.button_filter:
+
+                break;
+            case R.id.button_sortBy:
+
+                break;
+        }
     }
 }
