@@ -53,6 +53,9 @@
     <string name="new_password">New Password</string>
     <string name="new_email">New Email</string>
 
+    <!--Nearby Choice Screen-->
+    <string name="nearby">Nearby</string>
+
     <!--Nearby Screen-->
     <string name="near_holiday">Nearby</string>
     <string name="filter">Filter</string>

@@ -105,7 +105,7 @@ public class MyHolidaysActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        startActivity(new Intent(MyHolidaysActivity.this, NearHolidayActivity.class)
+        startActivity(new Intent(MyHolidaysActivity.this, NearHolidayChoiceActivity.class)
                 .putExtra("coords", coords.get(i)));
     }
 }

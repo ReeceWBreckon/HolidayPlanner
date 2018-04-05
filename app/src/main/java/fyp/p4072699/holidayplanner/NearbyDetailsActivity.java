@@ -59,7 +59,7 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
                     if (!res.has("rating")) {
                         r = "No Ratings Available.";
                     } else {
-                        r = res.getString("rating");
+                        r = res.getString("rating") + "/5";
                     }
                     a1 = res.getString("formatted_address");
                     if (!res.has("website")) {
@@ -67,7 +67,7 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
                     } else {
                         w = res.getString("website");
                     }
-                    formAddress = a1.replace(",", "\n");
+                    formAddress = a1.replace(", ", "\n");
                     name.setText(n);
                     rating.setText(r);
                     add1.setText(formAddress);
