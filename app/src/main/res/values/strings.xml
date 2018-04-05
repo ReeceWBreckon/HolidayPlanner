@@ -54,7 +54,14 @@
     <string name="new_email">New Email</string>
 
     <!--Nearby Choice Screen-->
-    <string name="nearby">Nearby</string>
+    <string name="aquarium">Aquariums</string>
+    <string name="amusement">Amusements</string>
+    <string name="bar">Bars</string>
+    <string name="casino">Casinos</string>
+    <string name="museum">Museums</string>
+    <string name="shopping">Shops</string>
+    <string name="resteraunt">Restaurants</string>
+    <string name="zoo">Zoos</string>
 
     <!--Nearby Screen-->
     <string name="near_holiday">Nearby</string>

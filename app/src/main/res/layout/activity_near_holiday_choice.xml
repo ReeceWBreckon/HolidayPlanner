@@ -10,10 +10,198 @@
         android:id="@+id/imageButton_rest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton_shopping"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/restaurant"
-        android:layout_marginLeft="24dp" />
+        android:layout_marginRight="8dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton_shopping"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/shopping"
+        app:layout_constraintStart_toEndOf="@+id/imageButton_rest" />
+
+    <ImageButton
+        android:id="@+id/imageButton_amusement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton_aquarium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView18"
+        app:srcCompat="@drawable/amusement"
+        android:layout_marginRight="8dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton_aquarium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView24"
+        app:srcCompat="@drawable/aquarium"
+        app:layout_constraintStart_toEndOf="@+id/imageButton_amusement" />
+
+    <ImageButton
+        android:id="@+id/imageButton_casino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton_museum"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView20"
+        app:srcCompat="@drawable/casino"
+        android:layout_marginRight="8dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton_museum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView25"
+        app:srcCompat="@drawable/museum"
+        app:layout_constraintStart_toEndOf="@+id/imageButton_casino" />
+
+    <ImageButton
+        android:id="@+id/imageButton_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton_zoo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView22"
+        app:srcCompat="@drawable/bar"
+        android:layout_marginRight="8dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton_zoo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView26"
+        app:srcCompat="@drawable/zoo"
+        app:layout_constraintStart_toEndOf="@+id/imageButton_bar" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/resteraunt"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton_rest"
+        app:layout_constraintStart_toStartOf="@+id/imageButton_rest"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_rest" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/amusement"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton_amusement"
+        app:layout_constraintStart_toStartOf="@+id/imageButton_amusement"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_amusement" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/casino"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton_casino"
+        app:layout_constraintStart_toStartOf="@+id/imageButton_casino"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_casino" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/bar"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton_bar"
+        app:layout_constraintStart_toStartOf="@+id/imageButton_bar"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_bar" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/shopping"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton_shopping"
+        app:layout_constraintStart_toStartOf="@+id/imageButton_shopping"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_shopping" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/aquarium"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton_aquarium"
+        app:layout_constraintStart_toStartOf="@+id/imageButton_aquarium"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_aquarium" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/museum"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton_museum"
+        app:layout_constraintStart_toStartOf="@+id/imageButton_museum"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_museum" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/zoo"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton_zoo"
+        app:layout_constraintHorizontal_bias="0.413"
+        app:layout_constraintStart_toStartOf="@+id/imageButton_zoo"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton_zoo" />
+
+    <Button
+        android:id="@+id/button_return"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/ret"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
 </android.support.constraint.ConstraintLayout>
