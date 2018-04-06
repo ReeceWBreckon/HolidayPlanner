@@ -1,7 +1,6 @@
 package fyp.p4072699.holidayplanner;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +11,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
-public class DestinationsActivity extends AppCompatActivity implements View.OnClickListener {
+public class DestinationsActivity extends DrawerNavigation implements View.OnClickListener, PlaceSelectionListener {
     private Button home;
     private ListView destinationLV;
     private double lat, lng;
@@ -21,6 +20,7 @@ public class DestinationsActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_destinations);
+        getDrawer();
         setTitle(R.string.destinations);
 
         //Connect to the display
@@ -33,26 +33,26 @@ public class DestinationsActivity extends AppCompatActivity implements View.OnCl
         home.setOnClickListener(this);
 
         //Get the data from the autocomplete
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                lat = place.getLatLng().latitude;
-                lng = place.getLatLng().longitude;
-
-                startActivity(new Intent(DestinationsActivity.this, DestinationDetailActivity.class)
-                        .putExtra("lat", lat)
-                        .putExtra("lng", lng));
-            }
-
-            @Override
-            public void onError(Status status) {
-
-            }
-        });
+        autocompleteFragment.setOnPlaceSelectedListener(this);
     }
 
     @Override
     public void onClick(View view) {
         startActivity(new Intent(DestinationsActivity.this, HomeActivity.class));
+    }
+
+    @Override
+    public void onPlaceSelected(Place place) {
+        lat = place.getLatLng().latitude;
+        lng = place.getLatLng().longitude;
+
+        startActivity(new Intent(DestinationsActivity.this, DestinationDetailActivity.class)
+                .putExtra("lat", lat)
+                .putExtra("lng", lng));
+    }
+
+    @Override
+    public void onError(Status status) {
+
     }
 }

@@ -2,7 +2,6 @@ package fyp.p4072699.holidayplanner;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,8 +12,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button changeEmail, changePassword, signOut, home;
+public class ProfileActivity extends DrawerNavigation implements View.OnClickListener, ValueEventListener {
+    private Button changeEmail, changePassword, signOut;
     private TextView name, email;
     private FirebaseAuth auth;
     private FirebaseDatabase fdb;
@@ -24,9 +23,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        setTitle(R.string.my_profile);
         auth = FirebaseAuth.getInstance();
         fdb = FirebaseDatabase.getInstance();
+        getDrawer();
+        setTitle(R.string.my_profile);
 
         //Connect to the display
         changeEmail = findViewById(R.id.button_changeemail);
@@ -34,32 +34,18 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         signOut = findViewById(R.id.button_signout);
         name = findViewById(R.id.textView_name);
         email = findViewById(R.id.textView_email);
-        home = findViewById(R.id.button_home);
 
         if (auth.getCurrentUser() != null) {
             e = auth.getCurrentUser().getEmail();
             userID = auth.getCurrentUser().getUid();
         }
 
-        fdb.getReference().child("users").child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                n = dataSnapshot.child("name").getValue(String.class);
-                email.setText(e);
-                name.setText(n);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        fdb.getReference().child("users").child(userID).addListenerForSingleValueEvent(this);
 
         //Set the click listeners
         changePassword.setOnClickListener(this);
         changeEmail.setOnClickListener(this);
         signOut.setOnClickListener(this);
-        home.setOnClickListener(this);
     }
 
     @Override
@@ -75,9 +61,18 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 auth.signOut();
                 startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
                 break;
-            case R.id.button_home:
-                startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
-                break;
         }
+    }
+
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        n = dataSnapshot.child("name").getValue(String.class);
+        email.setText(e);
+        name.setText(n);
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
     }
 }

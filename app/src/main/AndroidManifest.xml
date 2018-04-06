@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fyp.p4072699.holidayplanner">
 
-    <!-- Setup the permissions that will be use -->
+    <!-- Setup the permissions that will be used -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -26,11 +26,6 @@
         <activity android:name=".MyHolidaysActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".SignUpActivity" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD4xgPlDIFiAx1kTvGBxZagsD374dmEFiQ" />
-
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".DestinationsActivity" />
         <activity android:name=".DestinationDetailActivity" />
@@ -39,7 +34,12 @@
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".NearHolidayActivity" />
         <activity android:name=".NearbyDetailsActivity" />
-        <activity android:name=".NearHolidayChoiceActivity"></activity>
+        <activity android:name=".NearHolidayChoiceActivity" />
+        <activity android:name=".DrawerNavigation" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD4xgPlDIFiAx1kTvGBxZagsD374dmEFiQ" />
     </application>
 
 </manifest>

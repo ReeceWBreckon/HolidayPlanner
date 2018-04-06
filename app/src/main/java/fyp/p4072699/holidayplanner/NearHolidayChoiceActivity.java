@@ -41,40 +41,41 @@ public class NearHolidayChoiceActivity extends AppCompatActivity implements View
     @Override
     public void onClick(View view) {
         String type = null, title = null;
-        switch (view.getId()) {
-            case R.id.imageButton_rest:
-                type = "restaurant";
-                title = "Nearby Restaurants";
-                break;
-            case R.id.imageButton_amusement:
-                type = "amusement_park";
-                title = "Nearby Amusement Parks";
-                break;
-            case R.id.imageButton_aquarium:
-                type = "aquarium";
-                title = "Nearby Aquariums";
-                break;
-            case R.id.imageButton_casino:
-                type = "casino";
-                title = "Nearby Casinos";
-                break;
-            case R.id.imageButton_museum:
-                type = "museum";
-                title = "Nearby Museums";
-                break;
-            case R.id.imageButton_bar:
-                type = "bar";
-                title = "Nearby Bars";
-                break;
-            case R.id.imageButton_zoo:
-                type = "zoo";
-                title = "Nearby Zoos";
-                break;
-            case R.id.button_return:
-                startActivity(new Intent(NearHolidayChoiceActivity.this, MyHolidaysActivity.class));
-                break;
+        if (view.getId() != R.id.button_return) {
+            switch (view.getId()) {
+                case R.id.imageButton_rest:
+                    type = "restaurant";
+                    title = "Nearby Restaurants";
+                    break;
+                case R.id.imageButton_amusement:
+                    type = "amusement_park";
+                    title = "Nearby Amusement Parks";
+                    break;
+                case R.id.imageButton_aquarium:
+                    type = "aquarium";
+                    title = "Nearby Aquariums";
+                    break;
+                case R.id.imageButton_casino:
+                    type = "casino";
+                    title = "Nearby Casinos";
+                    break;
+                case R.id.imageButton_museum:
+                    type = "museum";
+                    title = "Nearby Museums";
+                    break;
+                case R.id.imageButton_bar:
+                    type = "bar";
+                    title = "Nearby Bars";
+                    break;
+                case R.id.imageButton_zoo:
+                    type = "zoo";
+                    title = "Nearby Zoos";
+                    break;
+            }
+            startAct(type, title);
+        } else {
+            startActivity(new Intent(NearHolidayChoiceActivity.this, MyHolidaysActivity.class));
         }
-        startAct(type, title);
     }
 
     public void startAct(String t, String title) {

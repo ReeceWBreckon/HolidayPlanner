@@ -2,7 +2,6 @@ package fyp.p4072699.holidayplanner;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class MyHolidaysActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class MyHolidaysActivity extends DrawerNavigation implements View.OnClickListener, AdapterView.OnItemClickListener {
     private Button home, add;
     private ListView holidayLv;
     private ArrayAdapter ad;
@@ -30,6 +29,7 @@ public class MyHolidaysActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_holidays);
+        getDrawer();
         setTitle(R.string.my_holidays);
 
         //Connect to the display
