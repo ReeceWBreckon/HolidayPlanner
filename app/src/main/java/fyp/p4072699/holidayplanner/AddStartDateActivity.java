@@ -1,8 +1,8 @@
 package fyp.p4072699.holidayplanner;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -10,7 +10,7 @@ import android.widget.DatePicker;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class AddStartDateActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddStartDateActivity extends AppCompatActivity implements View.OnClickListener, DatePicker.OnDateChangedListener {
     private DatePicker startDate;
     private Calendar calendar;
     private int day, month, year;
@@ -22,27 +22,29 @@ public class AddStartDateActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_start_date);
         setTitle(R.string.add_start_date);
+        connectDisplay();
+        setupCalendar();
+        setListeners();
+    }
 
+    protected void connectDisplay() {
         //Connect to the display
+        details = new ArrayList<>();
+        next = findViewById(R.id.button_confirmstartdate);
+        cancel = findViewById(R.id.button_cancel);
+    }
+
+    protected void setupCalendar() {
+        //Set the calendar to todays date
         calendar = Calendar.getInstance();
         day = calendar.get(Calendar.DAY_OF_MONTH);
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
-        details = new ArrayList<>();
-        next = findViewById(R.id.button_confirmstartdate);
-        cancel = findViewById(R.id.button_cancel);
-
-        //Set the calendar to todays date
         startDate = findViewById(R.id.datePicker_startdate);
-        startDate.init(year, month, day, new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
-                year = i;
-                month = i1;
-                day = i2;
-            }
-        });
+        startDate.init(year, month, day, this);
+    }
 
+    protected void setListeners() {
         //Add the click listeners
         next.setOnClickListener(this);
         cancel.setOnClickListener(this);
@@ -62,5 +64,12 @@ public class AddStartDateActivity extends AppCompatActivity implements View.OnCl
                 startActivity(new Intent(AddStartDateActivity.this, HomeActivity.class));
                 break;
         }
+    }
+
+    @Override
+    public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
+        year = i;
+        month = i1;
+        day = i2;
     }
 }

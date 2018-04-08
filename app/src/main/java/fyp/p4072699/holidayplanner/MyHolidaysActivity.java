@@ -8,11 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -20,8 +18,6 @@ public class MyHolidaysActivity extends DrawerNavigation implements View.OnClick
     private Button home, add;
     private ListView holidayLv;
     private ArrayAdapter ad;
-    private FirebaseDatabase fDBI;
-    private FirebaseAuth auth;
     private String userId;
     private ArrayList<String> holList, coords;
 
@@ -31,25 +27,27 @@ public class MyHolidaysActivity extends DrawerNavigation implements View.OnClick
         setContentView(R.layout.activity_my_holidays);
         getDrawer();
         setTitle(R.string.my_holidays);
+        connectDisplay();
+        setupListView();
+        getHolidays();
+        setListeners();
+    }
 
+    protected void connectDisplay() {
         //Connect to the display
         home = findViewById(R.id.button_returnhome);
         add = findViewById(R.id.button_addholiday);
         holidayLv = findViewById(R.id.listView_holidays);
         holList = new ArrayList<String>();
         coords = new ArrayList<String>();
+    }
+
+    protected void setupListView() {
         ad = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, holList);
         holidayLv.setAdapter(ad);
+    }
 
-        //Firebase setup
-        auth = FirebaseAuth.getInstance();
-        fDBI = FirebaseDatabase.getInstance();
-
-        if (auth.getCurrentUser() != null) {
-            userId = auth.getCurrentUser().getUid();
-        }
-        getHolidays();
-
+    protected void setListeners() {
         //Set the click listeners
         home.setOnClickListener(this);
         add.setOnClickListener(this);
@@ -57,7 +55,10 @@ public class MyHolidaysActivity extends DrawerNavigation implements View.OnClick
     }
 
     public void getHolidays() {
-        fDBI.getReference().child("holidays").child(userId).addChildEventListener(new ChildEventListener() {
+        if (getAuth().getCurrentUser() != null) {
+            userId = getAuth().getCurrentUser().getUid();
+        }
+        getDatabase().getReference().child("holidays").child(userId).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 String m = "Location: " + dataSnapshot.child("location").getValue(String.class) +

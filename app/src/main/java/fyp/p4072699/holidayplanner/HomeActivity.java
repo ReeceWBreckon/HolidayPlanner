@@ -14,12 +14,18 @@ public class HomeActivity extends DrawerNavigation implements View.OnClickListen
         setContentView(R.layout.activity_home);
         getDrawer();
         setTitle(R.string.home);
+        connectDisplay();
+        clickListeners();
+    }
 
+    public void connectDisplay() {
         //Connect to the display
         addHoliday = findViewById(R.id.button_addholiday);
         myHolidays = findViewById(R.id.button_viewholidays);
         destinations = findViewById(R.id.button_destinations);
+    }
 
+    public void clickListeners() {
         //Add the click listeners
         destinations.setOnClickListener(this);
         addHoliday.setOnClickListener(this);

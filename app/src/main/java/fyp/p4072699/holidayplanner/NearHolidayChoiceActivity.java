@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 public class NearHolidayChoiceActivity extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton rest, amuse, aquarium, casino, museum, bar, zoo;
+    private ImageButton rest, amuse, aquarium, casino, museum, bar, zoo, shops;
     private Button retur;
 
     @Override
@@ -16,7 +16,11 @@ public class NearHolidayChoiceActivity extends AppCompatActivity implements View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_holiday_choice);
         setTitle(R.string.near_holiday);
+        connectDisplay();
+        setListeners();
+    }
 
+    protected void connectDisplay() {
         //Connect to the display
         rest = findViewById(R.id.imageButton_rest);
         amuse = findViewById(R.id.imageButton_amusement);
@@ -26,7 +30,10 @@ public class NearHolidayChoiceActivity extends AppCompatActivity implements View
         bar = findViewById(R.id.imageButton_bar);
         zoo = findViewById(R.id.imageButton_zoo);
         retur = findViewById(R.id.button_return);
+        shops = findViewById(R.id.imageButton_shopping);
+    }
 
+    protected void setListeners() {
         //Set the click listeners
         rest.setOnClickListener(this);
         amuse.setOnClickListener(this);
@@ -36,6 +43,7 @@ public class NearHolidayChoiceActivity extends AppCompatActivity implements View
         bar.setOnClickListener(this);
         zoo.setOnClickListener(this);
         retur.setOnClickListener(this);
+        shops.setOnClickListener(this);
     }
 
     @Override
@@ -70,6 +78,10 @@ public class NearHolidayChoiceActivity extends AppCompatActivity implements View
                 case R.id.imageButton_zoo:
                     type = "zoo";
                     title = "Nearby Zoos";
+                    break;
+                case R.id.imageButton_shopping:
+                    type = "shopping_mall";
+                    title = "Nearby Shops";
                     break;
             }
             startAct(type, title);

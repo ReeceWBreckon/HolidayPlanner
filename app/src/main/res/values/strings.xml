@@ -63,6 +63,15 @@
     <string name="resteraunt">Restaurants</string>
     <string name="zoo">Zoos</string>
 
+    <string name="title_aquarium">Nearby Aquariums</string>
+    <string name="title_amusement">Nearby Amusements</string>
+    <string name="title_bar">Nearby Bars</string>
+    <string name="title_casino">Nearby Casinos</string>
+    <string name="title_museum">Nearby Museums</string>
+    <string name="title_shopping">Nearby Shops</string>
+    <string name="title_resteraunt">Nearby Restaurants</string>
+    <string name="title_zoo">Nearby Zoos</string>
+
     <!--Nearby Screen-->
     <string name="near_holiday">Nearby</string>
     <string name="filter">Filter</string>

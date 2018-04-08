@@ -35,35 +35,45 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_holiday);
         setTitle(getIntent().getStringExtra("title"));
-        nearbyList = new ArrayList<>();
-        placeID = new ArrayList<>();
+        connectDisplay();
+        setupListView();
+        setupURL();
+        setListeners();
+        getPlaces();
+        //20 places per search, up to 60 with next page token
+        //https://maps.googleapis.com/maps/api/place/nearbysearch/json?pagetoken=    "VALUE"      &key=     YOUR_API_KEY
+    }
 
-        //Connect to the display
-        retur = findViewById(R.id.button_return);
-        nearbyLV = findViewById(R.id.listView_nearby);
-        ad = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nearbyList);
-        nearbyLV.setAdapter(ad);
-        distance = findViewById(R.id.seekBar_distance);
-
-        //Setup the seek bar
-        distance.setOnSeekBarChangeListener(this);
-
+    protected void setupURL() {
         //set the url paramaters
         location = getIntent().getStringExtra("coords");
         type = getIntent().getStringExtra("type");
         radius = String.valueOf(distance.getProgress());
         key = "AIzaSyDAiArIeNB9Yyqvf--VRQZQb4Vhx-37b_k";
-
         baseURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
         //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant&keyword=cruise&key=
+    }
 
-        getPlaces();
-        //20 places per search, up to 60 with next page token
-        //https://maps.googleapis.com/maps/api/place/nearbysearch/json?pagetoken=    "VALUE"      &key=     YOUR_API_KEY
+    protected void setupListView() {
+        nearbyList = new ArrayList<>();
+        placeID = new ArrayList<>();
+        ad = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, nearbyList);
+        nearbyLV.setAdapter(ad);
+    }
 
+    protected void connectDisplay() {
+        //Connect to the display
+        retur = findViewById(R.id.button_return);
+        nearbyLV = findViewById(R.id.listView_nearby);
+        distance = findViewById(R.id.seekBar_distance);
+    }
+
+    protected void setListeners() {
         //Set the click listeners
         retur.setOnClickListener(this);
         nearbyLV.setOnItemClickListener(this);
+        //Setup the seek bar
+        distance.setOnSeekBarChangeListener(this);
     }
 
     private void getPlaces() {

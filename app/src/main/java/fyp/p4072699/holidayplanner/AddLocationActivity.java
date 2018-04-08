@@ -14,48 +14,39 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 import java.util.ArrayList;
 
-public class AddLocationActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddLocationActivity extends AppCompatActivity implements View.OnClickListener, PlaceSelectionListener {
     private Button next, cancel, ret;
     private ArrayList<Integer> details;
-    private Intent i;
     private String loc;
     private double lo, la;
+    private PlaceAutocompleteFragment autocompleteFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
         setTitle(R.string.add_location);
+        connectDisplay();
+        setListeners();
+    }
 
+    protected void connectDisplay() {
         //Connect to the display
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-        i = getIntent();
+        autocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         next = findViewById(R.id.button_next);
         cancel = findViewById(R.id.button_cancel);
         ret = findViewById(R.id.button_return);
-        details = i.getIntegerArrayListExtra("Details");
+        details = getIntent().getIntegerArrayListExtra("Details");
+    }
 
+    protected void setListeners() {
         //Set the click listeners
         next.setOnClickListener(this);
         cancel.setOnClickListener(this);
         ret.setOnClickListener(this);
 
         //Get the value from the autocomplete
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                Log.i("w", "Place: " + place.getName());
-                loc = place.getName().toString();
-                lo = place.getLatLng().longitude;
-                la = place.getLatLng().latitude;
-            }
-
-            @Override
-            public void onError(Status status) {
-                Log.i("w", "An error occurred: " + status);
-            }
-        });
+        autocompleteFragment.setOnPlaceSelectedListener(this);
     }
 
     @Override
@@ -75,5 +66,18 @@ public class AddLocationActivity extends AppCompatActivity implements View.OnCli
                 startActivity(new Intent(AddLocationActivity.this, AddStartDateActivity.class));
                 break;
         }
+    }
+
+    @Override
+    public void onPlaceSelected(Place place) {
+        Log.i("w", "Place: " + place.getName());
+        loc = place.getName().toString();
+        lo = place.getLatLng().longitude;
+        la = place.getLatLng().latitude;
+    }
+
+    @Override
+    public void onError(Status status) {
+
     }
 }

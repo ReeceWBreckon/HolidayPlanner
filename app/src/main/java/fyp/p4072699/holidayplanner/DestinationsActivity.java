@@ -14,7 +14,7 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 public class DestinationsActivity extends DrawerNavigation implements View.OnClickListener, PlaceSelectionListener {
     private Button home;
     private ListView destinationLV;
-    private double lat, lng;
+    private PlaceAutocompleteFragment autocompleteFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +22,18 @@ public class DestinationsActivity extends DrawerNavigation implements View.OnCli
         setContentView(R.layout.activity_destinations);
         getDrawer();
         setTitle(R.string.destinations);
+        connectDisplay();
+        setListeners();
+    }
 
+    protected void connectDisplay() {
         //Connect to the display
         home = findViewById(R.id.button_home);
         destinationLV = (ListView) findViewById(R.id.listview_destinations);
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+        autocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+    }
 
+    protected void setListeners() {
         //Set the click listener
         home.setOnClickListener(this);
 
@@ -43,8 +48,8 @@ public class DestinationsActivity extends DrawerNavigation implements View.OnCli
 
     @Override
     public void onPlaceSelected(Place place) {
-        lat = place.getLatLng().latitude;
-        lng = place.getLatLng().longitude;
+        double lat = place.getLatLng().latitude;
+        double lng = place.getLatLng().longitude;
 
         startActivity(new Intent(DestinationsActivity.this, DestinationDetailActivity.class)
                 .putExtra("lat", lat)

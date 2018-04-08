@@ -32,19 +32,20 @@ public class DestinationDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_destination_detail);
         setTitle(R.string.destination_details);
-        baseURL = "https://restcountries.eu/rest/v2/alpha/"; //https://restcountries.eu/rest/v2/alpha/col countryCode at the end
+        connectDisplay();
+        setParameters();
+        geoCoder();
+        getDetails();
+        setDisplay();
+    }
 
-        //Connect to the display
-        c = findViewById(R.id.textView_country);
-        flag = findViewById(R.id.imageView_flag);
-        cap = findViewById(R.id.textView_capital);
-        reg = findViewById(R.id.textView_subregion);
-        currenc = findViewById(R.id.textView_currency);
+    protected void setDisplay() {
+        c.setText(country);
+        int flagid = getResources().getIdentifier(countryCode.toLowerCase(), "drawable", getPackageName());
+        flag.setImageResource(flagid);
+    }
 
-        //Retrieve long/lang from previous screen
-        lat = getIntent().getExtras().getDouble("lat");
-        lng = getIntent().getExtras().getDouble("lng");
-
+    protected void geoCoder() {
         //get the country from the coordiantes
         Geocoder geo = new Geocoder(this);
         try {
@@ -54,17 +55,28 @@ public class DestinationDetailActivity extends AppCompatActivity {
                 country = location.get(0).getCountryName();
                 countryCode = location.get(0).getCountryCode();
                 if (countryCode.equals("do")) {
-                    countryCode = "doo";
+                    countryCode = "doo"; //do is a sacred word in java
                 }
                 URL = baseURL + countryCode;
             }
         } catch (IOException e) {
         }
+    }
 
-        getDetails();
-        c.setText(country);
-        int flagid = getResources().getIdentifier(countryCode.toLowerCase(), "drawable", getPackageName());
-        flag.setImageResource(flagid);
+    protected void setParameters() {
+        //Retrieve long/lang from previous screen
+        lat = getIntent().getExtras().getDouble("lat");
+        lng = getIntent().getExtras().getDouble("lng");
+        baseURL = "https://restcountries.eu/rest/v2/alpha/";
+    }
+
+    protected void connectDisplay() {
+        //Connect to the display
+        c = findViewById(R.id.textView_country);
+        flag = findViewById(R.id.imageView_flag);
+        cap = findViewById(R.id.textView_capital);
+        reg = findViewById(R.id.textView_subregion);
+        currenc = findViewById(R.id.textView_currency);
     }
 
     private void getDetails() {

@@ -3,7 +3,6 @@ package fyp.p4072699.holidayplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,21 +25,29 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby_details);
         setTitle(R.string.place_details);
+        setupUrl();
+        connectDisplay();
+        setListeners();
+        getDetails();
+    }
+
+    protected void setupUrl() {
         baseURL = "https://maps.googleapis.com/maps/api/place/details/json?placeid=";
         placeID = getIntent().getStringExtra("id");
-        Log.d("aaaaaa", placeID);
         key = "AIzaSyDAiArIeNB9Yyqvf--VRQZQb4Vhx-37b_k";
         //https://maps.googleapis.com/maps/api/place/details/json?placeid=  PLACEID  &key= VALUE
+    }
 
+    protected void connectDisplay() {
         //Connect to the display
         retur = findViewById(R.id.button_return);
         name = findViewById(R.id.textView_name);
         add1 = findViewById(R.id.textView_address1);
         rating = findViewById(R.id.textView_rating);
         website = findViewById(R.id.textView_website);
+    }
 
-        getDetails();
-
+    protected void setListeners() {
         //Set the click listener
         retur.setOnClickListener(this);
     }
