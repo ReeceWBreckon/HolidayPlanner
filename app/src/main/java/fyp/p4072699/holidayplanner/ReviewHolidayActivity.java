@@ -84,7 +84,7 @@ public class ReviewHolidayActivity extends DrawerNavigation implements View.OnCl
         DatabaseReference fDB = getDatabase().getReference("holidays").child(userId);
         DatabaseReference r = fDB.push();
 
-        Holiday h = new Holiday(l, f, t, lat, lng);
+        Holiday h = new Holiday(l, f, t, lat, lng, "0");
 
         r.setValue(h);
     }

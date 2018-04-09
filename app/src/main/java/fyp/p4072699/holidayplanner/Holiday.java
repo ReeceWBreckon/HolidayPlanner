@@ -1,19 +1,28 @@
 package fyp.p4072699.holidayplanner;
 
 public class Holiday {
-    private String location, dateFrom, dateTo;
+    private String location, dateFrom, dateTo, completed;
     private double lon, lat;
 
-    public Holiday(String l, String from, String to, double la, double lo) {
+    public Holiday(String l, String from, String to, double la, double lo, String c) {
         location = l;
         dateFrom = from;
         dateTo = to;
         lon = lo;
         lat = la;
+        completed = c;
     }
 
     public Holiday() {
 
+    }
+
+    public String getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(String completed) {
+        this.completed = completed;
     }
 
     public double getLon() {

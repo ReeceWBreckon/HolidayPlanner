@@ -29,7 +29,7 @@ public class MyHolidaysActivity extends DrawerNavigation implements View.OnClick
         setTitle(R.string.my_holidays);
         connectDisplay();
         setupListView();
-        getHolidays();
+        getHolidays("0");
         setListeners();
     }
 
@@ -54,20 +54,22 @@ public class MyHolidaysActivity extends DrawerNavigation implements View.OnClick
         holidayLv.setOnItemClickListener(this);
     }
 
-    public void getHolidays() {
+    public void getHolidays(final String si) {
         if (getAuth().getCurrentUser() != null) {
             userId = getAuth().getCurrentUser().getUid();
         }
         getDatabase().getReference().child("holidays").child(userId).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String m = "Location: " + dataSnapshot.child("location").getValue(String.class) +
-                        "\nDate From: " + dataSnapshot.child("dateFrom").getValue(String.class) +
-                        "\nDate To: " + dataSnapshot.child("dateTo").getValue(String.class);
-                String c = dataSnapshot.child("lat").getValue(double.class).toString() + "," + dataSnapshot.child("lon").getValue(double.class).toString();
-                coords.add(c);
-                holList.add(m);
-                ad.notifyDataSetChanged();
+                if (dataSnapshot.child("completed").getValue(String.class).equals(si)) {
+                    String m = "Location: " + dataSnapshot.child("location").getValue(String.class) +
+                            "\nDate From: " + dataSnapshot.child("dateFrom").getValue(String.class) +
+                            "\nDate To: " + dataSnapshot.child("dateTo").getValue(String.class);
+                    String c = dataSnapshot.child("lat").getValue(double.class).toString() + "," + dataSnapshot.child("lon").getValue(double.class).toString();
+                    coords.add(c);
+                    holList.add(m);
+                    ad.notifyDataSetChanged();
+                }
             }
 
             @Override

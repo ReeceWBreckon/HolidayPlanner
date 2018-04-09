@@ -8,6 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -16,10 +22,13 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class NearbyDetailsActivity extends AppCompatActivity implements View.OnClickListener {
+public class NearbyDetailsActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
     private Button retur, web;
     private TextView name, rating, add1;
     private String baseURL, placeID, key, URL, n, r, a1, w, formAddress;
+    private GoogleMap map;
+    private SupportMapFragment mapF;
+    private double lat, lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +41,11 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
         setListeners();
     }
 
+
     protected void setupUrl() {
         baseURL = "https://maps.googleapis.com/maps/api/place/details/json?placeid=";
         placeID = getIntent().getStringExtra("id");
         key = "AIzaSyDAiArIeNB9Yyqvf--VRQZQb4Vhx-37b_k";
-        //https://maps.googleapis.com/maps/api/place/details/json?placeid=  PLACEID  &key= VALUE
     }
 
     protected void connectDisplay() {
@@ -46,12 +55,15 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
         add1 = findViewById(R.id.textView_address1);
         rating = findViewById(R.id.textView_rating);
         web = findViewById(R.id.button_website);
+        mapF = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_location);
     }
 
     protected void setListeners() {
         //Set the click listener
         retur.setOnClickListener(this);
         web.setOnClickListener(this);
+        //Setup the map
+        mapF.getMapAsync(this);
     }
 
     private void getDetails() {
@@ -60,7 +72,7 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
         client.get(URL, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                JSONObject obj, res = null;
+                JSONObject obj, res, loca;
                 try {
                     obj = new JSONObject(new String(responseBody));
                     res = obj.getJSONObject("result");
@@ -72,10 +84,15 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
                     }
                     a1 = res.getString("formatted_address");
                     if (!res.has("website")) {
-                        w = "No Website Available.";
+                        w = "";
                     } else {
                         w = res.getString("website");
+                        web.setVisibility(View.VISIBLE);
                     }
+                    loca = res.getJSONObject("geometry").getJSONObject("location");
+                    lat = loca.getDouble("lat");
+                    lng = loca.getDouble("lng");
+                    onMapReady(map);
                     formAddress = a1.replace(", ", "\n");
                     name.setText(n);
                     rating.setText(r);
@@ -106,5 +123,16 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
                 startActivity(launchWeb);
                 break;
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        LatLng loc = new LatLng(lat, lng);
+
+        float z = 15.0f;
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, z));
+        map.addMarker(new MarkerOptions().position(loc));
+        map.getUiSettings().setScrollGesturesEnabled(false);
     }
 }
