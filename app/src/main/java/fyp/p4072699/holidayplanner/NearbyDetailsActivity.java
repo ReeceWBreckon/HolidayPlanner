@@ -1,6 +1,7 @@
 package fyp.p4072699.holidayplanner;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,8 +17,8 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class NearbyDetailsActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button retur;
-    private TextView name, rating, add1, website;
+    private Button retur, web;
+    private TextView name, rating, add1;
     private String baseURL, placeID, key, URL, n, r, a1, w, formAddress;
 
     @Override
@@ -27,8 +28,8 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
         setTitle(R.string.place_details);
         setupUrl();
         connectDisplay();
-        setListeners();
         getDetails();
+        setListeners();
     }
 
     protected void setupUrl() {
@@ -44,12 +45,13 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
         name = findViewById(R.id.textView_name);
         add1 = findViewById(R.id.textView_address1);
         rating = findViewById(R.id.textView_rating);
-        website = findViewById(R.id.textView_website);
+        web = findViewById(R.id.button_website);
     }
 
     protected void setListeners() {
         //Set the click listener
         retur.setOnClickListener(this);
+        web.setOnClickListener(this);
     }
 
     private void getDetails() {
@@ -78,7 +80,6 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
                     name.setText(n);
                     rating.setText(r);
                     add1.setText(formAddress);
-                    website.setText(w);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -96,7 +97,13 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
         switch (view.getId()) {
             case R.id.button_return:
                 startActivity(new Intent(NearbyDetailsActivity.this, NearHolidayActivity.class)
-                        .putExtra("coords", getIntent().getStringExtra("location")));
+                        .putExtra("coords", getIntent().getStringExtra("location"))
+                        .putExtra("type", getIntent().getStringExtra("type")));
+                break;
+            case R.id.button_website:
+                Uri site = Uri.parse(w);
+                Intent launchWeb = new Intent(Intent.ACTION_VIEW, site);
+                startActivity(launchWeb);
                 break;
         }
     }

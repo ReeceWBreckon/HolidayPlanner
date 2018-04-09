@@ -1,6 +1,6 @@
 <resources>
     <!--ALl-->
-    <string name="app_name">HolidayPlanner</string>
+    <string name="app_name">Holiday Planner</string>
     <string name="next">Next</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
@@ -76,9 +76,11 @@
     <string name="near_holiday">Nearby</string>
     <string name="filter">Filter</string>
     <string name="sort_by">Sort By</string>
+    <string name="search_name">Search By Name</string>
 
     <!--Nearby Details Screen-->
     <string name="place_details">Place Details</string>
     <string name="rating">Rating</string>
     <string name="address">Address</string>
+    <string name="go_website">Go To Website</string>
 </resources>

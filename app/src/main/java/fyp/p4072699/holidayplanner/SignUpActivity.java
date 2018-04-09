@@ -67,6 +67,7 @@ public class SignUpActivity extends DrawerNavigation implements View.OnClickList
                     break;
                 } else if (p.length() < 6) {
                     sendToast("Password needs to be 6 characters or longer.");
+                    break;
                 } else {
                     getAuth().createUserWithEmailAndPassword(e, p).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override

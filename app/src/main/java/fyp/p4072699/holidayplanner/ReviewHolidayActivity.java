@@ -38,12 +38,11 @@ public class ReviewHolidayActivity extends DrawerNavigation implements View.OnCl
 
     protected void setDisplay() {
         //Set the text to show the holiday details
-        start = (String.valueOf(details.get(3)) + " / " + String.valueOf(details.get(4)) + " / " + String.valueOf(details.get(5)));
-        end = (String.valueOf(details.get(0)) + " / " + String.valueOf(details.get(1)) + " / " + String.valueOf(details.get(2)));
+        end = (String.valueOf(details.get(3)) + " / " + String.valueOf(details.get(4) + 1) + " / " + String.valueOf(details.get(5)));
+        start = (String.valueOf(details.get(0)) + " / " + String.valueOf(details.get(1) + 1) + " / " + String.valueOf(details.get(2)));
         startDate.setText(start);
         endDate.setText(end);
         location.setText(loc);
-
     }
 
     protected void connectDisplay() {

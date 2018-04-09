@@ -21,8 +21,15 @@ public class LoginActivity extends DrawerNavigation implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setTitle(R.string.Login);
+        checkUserLoggedIn();
         connectDisplay();
         setListeners();
+    }
+
+    protected void checkUserLoggedIn() {
+        if (getAuth().getCurrentUser() != null) {
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        }
     }
 
     protected void connectDisplay() {
