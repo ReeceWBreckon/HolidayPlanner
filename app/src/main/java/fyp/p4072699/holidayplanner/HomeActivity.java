@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class HomeActivity extends DrawerNavigation implements View.OnClickListener {
+public class HomeActivity extends AppController implements View.OnClickListener {
     private Button addHoliday, myHolidays, destinations;
 
     @Override

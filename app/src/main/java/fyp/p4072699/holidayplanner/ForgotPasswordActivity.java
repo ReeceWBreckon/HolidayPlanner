@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class ForgotPasswordActivity extends DrawerNavigation implements View.OnClickListener {
+public class ForgotPasswordActivity extends AppController implements View.OnClickListener {
     private Button reset, ret;
     private EditText e;
     private String email;

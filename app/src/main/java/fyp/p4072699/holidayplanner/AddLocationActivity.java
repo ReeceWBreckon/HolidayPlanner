@@ -2,8 +2,6 @@ package fyp.p4072699.holidayplanner;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,15 +9,17 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.util.ArrayList;
 
-public class AddLocationActivity extends AppCompatActivity implements View.OnClickListener, PlaceSelectionListener {
+public class AddLocationActivity extends AppController implements View.OnClickListener, PlaceSelectionListener, OnMapReadyCallback {
     private Button next, cancel, ret;
     private ArrayList<Integer> details;
     private String loc;
     private double lo, la;
     private PlaceAutocompleteFragment autocompleteFragment;
+    private View m;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,17 @@ public class AddLocationActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_add_location);
         setTitle(R.string.add_location);
         connectDisplay();
+        setupMap();
+        hideMap();
         setListeners();
+    }
+
+    protected void hideMap() {
+        m.setVisibility(View.GONE);
+    }
+
+    protected void showMap() {
+        m.setVisibility(View.VISIBLE);
     }
 
     protected void connectDisplay() {
@@ -37,6 +47,7 @@ public class AddLocationActivity extends AppCompatActivity implements View.OnCli
         cancel = findViewById(R.id.button_cancel);
         ret = findViewById(R.id.button_return);
         details = getIntent().getIntegerArrayListExtra("Details");
+        m = findViewById(R.id.map_location);
     }
 
     protected void setListeners() {
@@ -70,10 +81,13 @@ public class AddLocationActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onPlaceSelected(Place place) {
-        Log.i("w", "Place: " + place.getName());
         loc = place.getName().toString();
         lo = place.getLatLng().longitude;
         la = place.getLatLng().latitude;
+        setLat(la);
+        setLng(lo);
+        setF(11.0f);
+        showMap();
     }
 
     @Override

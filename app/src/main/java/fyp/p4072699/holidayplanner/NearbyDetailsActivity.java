@@ -3,17 +3,11 @@ package fyp.p4072699.holidayplanner;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -22,13 +16,10 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class NearbyDetailsActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback {
+public class NearbyDetailsActivity extends AppController implements View.OnClickListener, OnMapReadyCallback {
     private Button retur, web;
     private TextView name, rating, add1;
     private String baseURL, placeID, key, URL, n, r, a1, w, formAddress;
-    private GoogleMap map;
-    private SupportMapFragment mapF;
-    private double lat, lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +28,10 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
         setTitle(R.string.place_details);
         setupUrl();
         connectDisplay();
+        setupMap();
         getDetails();
         setListeners();
     }
-
 
     protected void setupUrl() {
         baseURL = "https://maps.googleapis.com/maps/api/place/details/json?placeid=";
@@ -55,15 +46,12 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
         add1 = findViewById(R.id.textView_address1);
         rating = findViewById(R.id.textView_rating);
         web = findViewById(R.id.button_website);
-        mapF = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_location);
     }
 
     protected void setListeners() {
         //Set the click listener
         retur.setOnClickListener(this);
         web.setOnClickListener(this);
-        //Setup the map
-        mapF.getMapAsync(this);
     }
 
     private void getDetails() {
@@ -83,16 +71,14 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
                         r = res.getString("rating") + "/5";
                     }
                     a1 = res.getString("formatted_address");
-                    if (!res.has("website")) {
-                        w = "";
-                    } else {
+                    if (res.has("website")) {
                         w = res.getString("website");
                         web.setVisibility(View.VISIBLE);
                     }
                     loca = res.getJSONObject("geometry").getJSONObject("location");
-                    lat = loca.getDouble("lat");
-                    lng = loca.getDouble("lng");
-                    onMapReady(map);
+                    setLat(loca.getDouble("lat"));
+                    setLng(loca.getDouble("lng"));
+                    setF(15.0f);
                     formAddress = a1.replace(", ", "\n");
                     name.setText(n);
                     rating.setText(r);
@@ -123,16 +109,5 @@ public class NearbyDetailsActivity extends AppCompatActivity implements View.OnC
                 startActivity(launchWeb);
                 break;
         }
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-        LatLng loc = new LatLng(lat, lng);
-
-        float z = 15.0f;
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, z));
-        map.addMarker(new MarkerOptions().position(loc));
-        map.getUiSettings().setScrollGesturesEnabled(false);
     }
 }

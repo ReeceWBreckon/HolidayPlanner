@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class ChangePasswordActivity extends DrawerNavigation implements View.OnClickListener {
+public class ChangePasswordActivity extends AppController implements View.OnClickListener {
     private Button save, cancel;
     private EditText newPass, confPass;
 

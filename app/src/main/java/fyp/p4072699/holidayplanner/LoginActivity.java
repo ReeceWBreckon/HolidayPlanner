@@ -11,7 +11,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
-public class LoginActivity extends DrawerNavigation implements View.OnClickListener {
+public class LoginActivity extends AppController implements View.OnClickListener {
     private Button login, signup, forgot;
     private String email, password;
     private EditText em, pa;

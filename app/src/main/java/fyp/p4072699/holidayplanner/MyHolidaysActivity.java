@@ -14,7 +14,7 @@ import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
 
-public class MyHolidaysActivity extends DrawerNavigation implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class MyHolidaysActivity extends AppController implements View.OnClickListener, AdapterView.OnItemClickListener {
     private Button home, add;
     private ListView holidayLv;
     private ArrayAdapter ad;

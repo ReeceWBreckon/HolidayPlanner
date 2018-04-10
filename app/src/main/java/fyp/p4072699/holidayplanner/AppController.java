@@ -7,15 +7,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class DrawerNavigation extends AppCompatActivity {
+public class AppController extends AppCompatActivity implements OnMapReadyCallback {
     private NavigationView nav;
     private FirebaseAuth auth;
     private FirebaseUser user;
     private FirebaseDatabase database;
+    private float f;
+    private double lat, lng;
+    private GoogleMap map;
+    private SupportMapFragment mapF;
 
     public FirebaseDatabase getDatabase() {
         database = FirebaseDatabase.getInstance();
@@ -65,5 +75,33 @@ public class DrawerNavigation extends AppCompatActivity {
                         return true;
                     }
                 });
+    }
+
+    public void setF(float f) {
+        this.f = f;
+        onMapReady(map);
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    public void setupMap() {
+        mapF = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map_location);
+        mapF.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        LatLng loc = new LatLng(lat, lng);
+
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, f));
+        map.addMarker(new MarkerOptions().position(loc));
+        map.getUiSettings().setScrollGesturesEnabled(false);
     }
 }

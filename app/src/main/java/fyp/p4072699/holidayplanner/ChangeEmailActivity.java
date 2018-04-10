@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class ChangeEmailActivity extends DrawerNavigation implements View.OnClickListener {
+public class ChangeEmailActivity extends AppController implements View.OnClickListener {
     private Button save, cancel;
     private EditText newEmail, confEmail;
 

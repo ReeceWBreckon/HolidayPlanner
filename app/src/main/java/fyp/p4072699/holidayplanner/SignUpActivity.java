@@ -12,7 +12,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.DatabaseReference;
 
-public class SignUpActivity extends DrawerNavigation implements View.OnClickListener {
+public class SignUpActivity extends AppController implements View.OnClickListener {
     private EditText name, email, confirmEmail, password, confirmPassword;
     private Button signUp, ret;
     private String n, e, ce, p, cp;

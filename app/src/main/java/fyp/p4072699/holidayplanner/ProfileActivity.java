@@ -10,7 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-public class ProfileActivity extends DrawerNavigation implements View.OnClickListener, ValueEventListener {
+public class ProfileActivity extends AppController implements View.OnClickListener, ValueEventListener {
     private Button changeEmail, changePassword, signOut;
     private TextView name, email;
     private String userID;

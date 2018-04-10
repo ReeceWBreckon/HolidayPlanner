@@ -10,7 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
-public class ReviewHolidayActivity extends DrawerNavigation implements View.OnClickListener {
+public class ReviewHolidayActivity extends AppController implements View.OnClickListener {
     private TextView startDate, endDate, location;
     private ArrayList<Integer> details;
     private Button save, cancel;
@@ -65,7 +65,7 @@ public class ReviewHolidayActivity extends DrawerNavigation implements View.OnCl
         Intent i = new Intent(ReviewHolidayActivity.this, HomeActivity.class);
         switch (view.getId()) {
             case R.id.button_save:
-                addHoliday(loc, end, start);
+                addHoliday(loc, start, end);
                 startActivity(i);
                 break;
             case R.id.button_cancel:

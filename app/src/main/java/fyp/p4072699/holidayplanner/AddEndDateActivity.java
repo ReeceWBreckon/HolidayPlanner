@@ -8,7 +8,7 @@ import android.widget.DatePicker;
 
 import java.util.ArrayList;
 
-public class AddEndDateActivity extends DrawerNavigation implements View.OnClickListener, DatePicker.OnDateChangedListener {
+public class AddEndDateActivity extends AppController implements View.OnClickListener, DatePicker.OnDateChangedListener {
     private DatePicker endDate;
     private int day, month, year;
     private Button next, cancel, ret;
