@@ -4,10 +4,12 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -16,7 +18,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -26,6 +30,7 @@ public class DestinationDetailActivity extends AppCompatActivity {
     private List<Address> location;
     private TextView c, cap, reg, currenc;
     private ImageView flag;
+    private FirebaseFirestore fireDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,7 @@ public class DestinationDetailActivity extends AppCompatActivity {
         setTitle(R.string.destination_details);
         connectDisplay();
         setParameters();
+        fireDB = FirebaseFirestore.getInstance();
         geoCoder();
         getDetails();
         setDisplay();
@@ -57,6 +63,7 @@ public class DestinationDetailActivity extends AppCompatActivity {
                 if (countryCode.equals("do")) {
                     countryCode = "doo"; //do is a sacred word in java
                 }
+                saveCountry(countryCode);
                 URL = baseURL + countryCode;
             }
         } catch (IOException e) {
@@ -79,6 +86,25 @@ public class DestinationDetailActivity extends AppCompatActivity {
         currenc = findViewById(R.id.textView_currency);
     }
 
+    protected void saveCountry(final String s) {
+        final Map<String, Object> hits = new HashMap<>();
+        hits.put("hits", 0);
+        fireDB.collection("HotCountry").document(s).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    Map<String, Object> data = documentSnapshot.getData();
+                    Long i = (Long) data.get("hits");
+                    hits.clear();
+                    hits.put("hits", i + 1);
+                    fireDB.collection("HotCountry").document(s).update(hits);
+                } else {
+                    fireDB.collection("HotCountry").document(s).set(hits);
+                }
+            }
+        });
+    }
+
     private void getDetails() {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(URL, new AsyncHttpResponseHandler() {
@@ -93,7 +119,6 @@ public class DestinationDetailActivity extends AppCompatActivity {
                     curr = obj.getJSONArray("currencies");
                     co = curr.getJSONObject(0);
                     currency = co.getString("name");
-                    Log.d("currecnt", currency);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

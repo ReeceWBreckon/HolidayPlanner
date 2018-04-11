@@ -31,6 +31,7 @@ dependencies {
     compile 'com.google.firebase:firebase-core:12.0.0'
     compile 'com.google.firebase:firebase-auth:12.0.0'
     compile 'com.google.firebase:firebase-database:12.0.0'
+    compile 'com.google.firebase:firebase-firestore:12.0.0'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.crashlytics.sdk.android:crashlytics:2.9.1'
 }
