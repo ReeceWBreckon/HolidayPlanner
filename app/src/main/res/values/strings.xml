@@ -45,6 +45,7 @@
     <string name="region">Region </string>
     <string name="currency">Currency </string>
     <string name="two_dots">:</string>
+    <string name="trending">Trending</string>
 
     <!--Profile Screen-->
     <string name="my_profile">My Profile</string>

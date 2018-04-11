@@ -1,15 +1,14 @@
 package fyp.p4072699.holidayplanner;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -18,19 +17,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 
-public class DestinationDetailActivity extends AppCompatActivity {
+public class DestinationDetailActivity extends AppController implements View.OnClickListener {
     private double lat, lng;
+    private Button retur;
     private String country, countryCode, baseURL, URL, capital, region, currency;
     private List<Address> location;
     private TextView c, cap, reg, currenc;
     private ImageView flag;
-    private FirebaseFirestore fireDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +36,21 @@ public class DestinationDetailActivity extends AppCompatActivity {
         setTitle(R.string.destination_details);
         connectDisplay();
         setParameters();
-        fireDB = FirebaseFirestore.getInstance();
         geoCoder();
         getDetails();
         setDisplay();
+        setClickListeners();
+    }
+
+    protected void setClickListeners() {
+        retur.setOnClickListener(this);
     }
 
     protected void setDisplay() {
         c.setText(country);
         int flagid = getResources().getIdentifier(countryCode.toLowerCase(), "drawable", getPackageName());
         flag.setImageResource(flagid);
+        retur = findViewById(R.id.button_retur);
     }
 
     protected void geoCoder() {
@@ -86,25 +88,6 @@ public class DestinationDetailActivity extends AppCompatActivity {
         currenc = findViewById(R.id.textView_currency);
     }
 
-    protected void saveCountry(final String s) {
-        final Map<String, Object> hits = new HashMap<>();
-        hits.put("hits", 0);
-        fireDB.collection("HotCountry").document(s).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-                    Map<String, Object> data = documentSnapshot.getData();
-                    Long i = (Long) data.get("hits");
-                    hits.clear();
-                    hits.put("hits", i + 1);
-                    fireDB.collection("HotCountry").document(s).update(hits);
-                } else {
-                    fireDB.collection("HotCountry").document(s).set(hits);
-                }
-            }
-        });
-    }
-
     private void getDetails() {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(URL, new AsyncHttpResponseHandler() {
@@ -132,5 +115,10 @@ public class DestinationDetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        startActivity(new Intent(DestinationDetailActivity.this, DestinationsActivity.class));
     }
 }

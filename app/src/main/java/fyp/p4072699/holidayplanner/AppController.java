@@ -13,15 +13,22 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AppController extends AppCompatActivity implements OnMapReadyCallback {
     private NavigationView nav;
     private FirebaseAuth auth;
     private FirebaseUser user;
     private FirebaseDatabase database;
+    private FirebaseFirestore fireDB;
     private float f;
     private double lat, lng;
     private GoogleMap map;
@@ -30,6 +37,11 @@ public class AppController extends AppCompatActivity implements OnMapReadyCallba
     public FirebaseDatabase getDatabase() {
         database = FirebaseDatabase.getInstance();
         return database;
+    }
+
+    public FirebaseFirestore getFireDB() {
+        fireDB = FirebaseFirestore.getInstance();
+        return fireDB;
     }
 
     public FirebaseAuth getAuth() {
@@ -75,6 +87,26 @@ public class AppController extends AppCompatActivity implements OnMapReadyCallba
                         return true;
                     }
                 });
+    }
+
+    protected void saveCountry(final String s) {
+        getFireDB();
+        final Map<String, Object> hits = new HashMap<>();
+        hits.put("hits", 0);
+        fireDB.collection("HotCountry").document(s).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    Map<String, Object> data = documentSnapshot.getData();
+                    Long i = (Long) data.get("hits");
+                    hits.clear();
+                    hits.put("hits", i + 1);
+                    fireDB.collection("HotCountry").document(s).update(hits);
+                } else {
+                    fireDB.collection("HotCountry").document(s).set(hits);
+                }
+            }
+        });
     }
 
     public void setF(float f) {
