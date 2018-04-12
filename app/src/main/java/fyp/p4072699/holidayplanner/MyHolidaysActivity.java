@@ -29,7 +29,7 @@ public class MyHolidaysActivity extends AppController implements View.OnClickLis
         setTitle(R.string.my_holidays);
         connectDisplay();
         setupListView();
-        getHolidays("0");
+        getHolidays();
         setListeners();
     }
 
@@ -54,18 +54,18 @@ public class MyHolidaysActivity extends AppController implements View.OnClickLis
         holidayLv.setOnItemClickListener(this);
     }
 
-    public void getHolidays(final String si) {
+    public void getHolidays() {
         if (getAuth().getCurrentUser() != null) {
             userId = getAuth().getCurrentUser().getUid();
         }
-        getDatabase().getReference().child("holidays").child(userId).addChildEventListener(new ChildEventListener() {
+        getDatabase().getReference().child(getString(R.string.holidays)).child(userId).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.child("completed").getValue(String.class).equals(si)) {
-                    String m = "Location: " + dataSnapshot.child("location").getValue(String.class) +
-                            "\nDate From: " + dataSnapshot.child("dateFrom").getValue(String.class) +
-                            "\nDate To: " + dataSnapshot.child("dateTo").getValue(String.class);
-                    String c = dataSnapshot.child("lat").getValue(double.class).toString() + "," + dataSnapshot.child("lon").getValue(double.class).toString();
+                if (dataSnapshot.child(getString(R.string.completed)).getValue(String.class).equals(getString(R.string.zero))) {
+                    String m = getString(R.string.location_two_dots) + dataSnapshot.child(getString(R.string.loc)).getValue(String.class) +
+                            "\n" + getString(R.string.date_from_two_dots) + dataSnapshot.child(getString(R.string.date_from)).getValue(String.class) +
+                            "\n" + getString(R.string.date_to_two_dots) + dataSnapshot.child(getString(R.string.date_to)).getValue(String.class);
+                    String c = dataSnapshot.child(getString(R.string.lat)).getValue(double.class).toString() + getString(R.string.com) + dataSnapshot.child(getString(R.string.lon)).getValue(double.class).toString();
                     coords.add(c);
                     holList.add(m);
                     ad.notifyDataSetChanged();

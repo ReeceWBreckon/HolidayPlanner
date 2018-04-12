@@ -30,16 +30,16 @@ public class ReviewHolidayActivity extends AppController implements View.OnClick
 
     protected void getDetailsFromPrevious() {
         //Get the details from the previous screen
-        details = getIntent().getIntegerArrayListExtra("Details");
-        loc = getIntent().getStringExtra("Location");
-        lat = getIntent().getExtras().getDouble("lat");
-        lng = getIntent().getExtras().getDouble("lng");
+        details = getIntent().getIntegerArrayListExtra(getString(R.string.details));
+        loc = getIntent().getStringExtra(getString(R.string.loc));
+        lat = getIntent().getExtras().getDouble(getString(R.string.lat));
+        lng = getIntent().getExtras().getDouble(getString(R.string.lng));
     }
 
     protected void setDisplay() {
         //Set the text to show the holiday details
-        end = (String.valueOf(details.get(3)) + " / " + String.valueOf(details.get(4) + 1) + " / " + String.valueOf(details.get(5)));
-        start = (String.valueOf(details.get(0)) + " / " + String.valueOf(details.get(1) + 1) + " / " + String.valueOf(details.get(2)));
+        end = (String.valueOf(details.get(3)) + getString(R.string.slash) + String.valueOf(details.get(4) + 1) + getString(R.string.slash) + String.valueOf(details.get(5)));
+        start = (String.valueOf(details.get(0)) + getString(R.string.slash) + String.valueOf(details.get(1) + 1) + getString(R.string.slash) + String.valueOf(details.get(2)));
         startDate.setText(start);
         endDate.setText(end);
         location.setText(loc);
@@ -81,7 +81,7 @@ public class ReviewHolidayActivity extends AppController implements View.OnClick
             userId = getAuth().getCurrentUser().getUid();
         }
 
-        DatabaseReference fDB = getDatabase().getReference("holidays").child(userId);
+        DatabaseReference fDB = getDatabase().getReference(getString(R.string.holidays)).child(userId);
         DatabaseReference r = fDB.push();
 
         Holiday h = new Holiday(l, f, t, lat, lng, "0");

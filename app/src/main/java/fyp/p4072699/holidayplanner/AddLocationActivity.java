@@ -20,6 +20,7 @@ public class AddLocationActivity extends AppController implements View.OnClickLi
     private double lo, la;
     private PlaceAutocompleteFragment autocompleteFragment;
     private View m;
+    private Float zoom = 11.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class AddLocationActivity extends AppController implements View.OnClickLi
         next = findViewById(R.id.button_next);
         cancel = findViewById(R.id.button_cancel);
         ret = findViewById(R.id.button_return);
-        details = getIntent().getIntegerArrayListExtra("Details");
+        details = getIntent().getIntegerArrayListExtra(getString(R.string.details));
         m = findViewById(R.id.map_location);
     }
 
@@ -65,10 +66,10 @@ public class AddLocationActivity extends AppController implements View.OnClickLi
         switch (view.getId()) {
             case R.id.button_next:
                 startActivity(new Intent(AddLocationActivity.this, ReviewHolidayActivity.class)
-                        .putExtra("Details", details)
-                        .putExtra("Location", loc)
-                        .putExtra("lng", lo)
-                        .putExtra("lat", la));
+                        .putExtra(getString(R.string.details), details)
+                        .putExtra(getString(R.string.loc), loc)
+                        .putExtra(getString(R.string.lng), lo)
+                        .putExtra(getString(R.string.lat), la));
                 break;
             case R.id.button_cancel:
                 startActivity(new Intent(AddLocationActivity.this, HomeActivity.class));
@@ -86,7 +87,7 @@ public class AddLocationActivity extends AppController implements View.OnClickLi
         la = place.getLatLng().latitude;
         setLat(la);
         setLng(lo);
-        setF(11.0f);
+        setF(zoom);
         showMap();
     }
 

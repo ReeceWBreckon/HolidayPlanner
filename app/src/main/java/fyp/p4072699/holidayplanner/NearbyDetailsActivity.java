@@ -19,7 +19,8 @@ import cz.msebera.android.httpclient.Header;
 public class NearbyDetailsActivity extends AppController implements View.OnClickListener, OnMapReadyCallback {
     private Button retur, web;
     private TextView name, rating, add1;
-    private String baseURL, placeID, key, URL, n, r, a1, w, formAddress;
+    private String n, r, a1, w, formAddress, placeID;
+    private Float zoom = 15.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +35,7 @@ public class NearbyDetailsActivity extends AppController implements View.OnClick
     }
 
     protected void setupUrl() {
-        baseURL = "https://maps.googleapis.com/maps/api/place/details/json?placeid=";
-        placeID = getIntent().getStringExtra("id");
-        key = "AIzaSyDAiArIeNB9Yyqvf--VRQZQb4Vhx-37b_k";
+        placeID = getIntent().getStringExtra(getString(R.string.id));
     }
 
     protected void connectDisplay() {
@@ -55,7 +54,7 @@ public class NearbyDetailsActivity extends AppController implements View.OnClick
     }
 
     private void getDetails() {
-        URL = baseURL + placeID + "&key=" + key;
+        String URL = getString(R.string.google_place_base_url) + placeID + getString(R.string.and_key) + getString(R.string.key);
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(URL, new AsyncHttpResponseHandler() {
             @Override
@@ -63,23 +62,23 @@ public class NearbyDetailsActivity extends AppController implements View.OnClick
                 JSONObject obj, res, loca;
                 try {
                     obj = new JSONObject(new String(responseBody));
-                    res = obj.getJSONObject("result");
-                    n = res.getString("name");
-                    if (!res.has("rating")) {
-                        r = "No Ratings Available.";
+                    res = obj.getJSONObject(getString(R.string.result));
+                    n = res.getString(getString(R.string.name_lower));
+                    if (!res.has(getString(R.string.rating_lower))) {
+                        r = getString(R.string.no_ratings);
                     } else {
-                        r = res.getString("rating") + "/5";
+                        r = res.getString(getString(R.string.rating_lower)) + getString(R.string.out_of_five);
                     }
-                    a1 = res.getString("formatted_address");
-                    if (res.has("website")) {
-                        w = res.getString("website");
+                    a1 = res.getString(getString(R.string.formatted_address));
+                    if (res.has(getString(R.string.website))) {
+                        w = res.getString(getString(R.string.website));
                         web.setVisibility(View.VISIBLE);
                     }
-                    loca = res.getJSONObject("geometry").getJSONObject("location");
-                    setLat(loca.getDouble("lat"));
-                    setLng(loca.getDouble("lng"));
-                    setF(15.0f);
-                    formAddress = a1.replace(", ", "\n");
+                    loca = res.getJSONObject(getString(R.string.geometry)).getJSONObject(getString(R.string.loc));
+                    setLat(loca.getDouble(getString(R.string.lat)));
+                    setLng(loca.getDouble(getString(R.string.lng)));
+                    setF(zoom);
+                    formAddress = a1.replace(getString(R.string.com_space), getString(R.string.new_line));
                     name.setText(n);
                     rating.setText(r);
                     add1.setText(formAddress);
@@ -100,8 +99,8 @@ public class NearbyDetailsActivity extends AppController implements View.OnClick
         switch (view.getId()) {
             case R.id.button_return:
                 startActivity(new Intent(NearbyDetailsActivity.this, NearHolidayActivity.class)
-                        .putExtra("coords", getIntent().getStringExtra("location"))
-                        .putExtra("type", getIntent().getStringExtra("type")));
+                        .putExtra(getString(R.string.coords), getIntent().getStringExtra(getString(R.string.loc)))
+                        .putExtra(getString(R.string.type), getIntent().getStringExtra(getString(R.string.type))));
                 break;
             case R.id.button_website:
                 Uri site = Uri.parse(w);

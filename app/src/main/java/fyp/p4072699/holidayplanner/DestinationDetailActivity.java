@@ -24,10 +24,10 @@ import cz.msebera.android.httpclient.Header;
 public class DestinationDetailActivity extends AppController implements View.OnClickListener {
     private double lat, lng;
     private Button retur;
-    private String country, countryCode, baseURL, URL, capital, region, currency;
-    private List<Address> location;
+    private String country, countryCode, URL, capital, region, currency;
     private TextView c, cap, reg, currenc;
     private ImageView flag;
+    private int index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class DestinationDetailActivity extends AppController implements View.OnC
 
     protected void setDisplay() {
         c.setText(country);
-        int flagid = getResources().getIdentifier(countryCode.toLowerCase(), "drawable", getPackageName());
+        int flagid = getResources().getIdentifier(countryCode.toLowerCase(), getString(R.string.drawable), getPackageName());
         flag.setImageResource(flagid);
         retur = findViewById(R.id.button_retur);
     }
@@ -57,16 +57,15 @@ public class DestinationDetailActivity extends AppController implements View.OnC
         //get the country from the coordiantes
         Geocoder geo = new Geocoder(this);
         try {
-            location = geo.getFromLocation(lat, lng, 1);
-
+            List<Address> location = geo.getFromLocation(lat, lng, 1);
             if (location != null) {
-                country = location.get(0).getCountryName();
-                countryCode = location.get(0).getCountryCode();
-                if (countryCode.equals("do")) {
-                    countryCode = "doo"; //do is a sacred word in java
+                country = location.get(index).getCountryName();
+                countryCode = location.get(index).getCountryCode();
+                if (countryCode.equals(getString(R.string.domRepublicCode))) {
+                    countryCode = getString(R.string.domrepublicReplace); //do is a sacred word in java
                 }
                 saveCountry(countryCode);
-                URL = baseURL + countryCode;
+                URL = getString(R.string.rest_base_url) + countryCode;
             }
         } catch (IOException e) {
         }
@@ -74,9 +73,8 @@ public class DestinationDetailActivity extends AppController implements View.OnC
 
     protected void setParameters() {
         //Retrieve long/lang from previous screen
-        lat = getIntent().getExtras().getDouble("lat");
-        lng = getIntent().getExtras().getDouble("lng");
-        baseURL = "https://restcountries.eu/rest/v2/alpha/";
+        lat = getIntent().getExtras().getDouble(getString(R.string.lat));
+        lng = getIntent().getExtras().getDouble(getString(R.string.lng));
     }
 
     protected void connectDisplay() {
@@ -93,15 +91,15 @@ public class DestinationDetailActivity extends AppController implements View.OnC
         client.get(URL, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                JSONObject obj, co = null;
+                JSONObject obj, co;
                 JSONArray curr;
                 try {
                     obj = new JSONObject(new String(responseBody));
-                    capital = obj.getString("capital");
-                    region = obj.getString("region");
-                    curr = obj.getJSONArray("currencies");
-                    co = curr.getJSONObject(0);
-                    currency = co.getString("name");
+                    capital = obj.getString(getString(R.string.capital_lower));
+                    region = obj.getString(getString(R.string.region_lower));
+                    curr = obj.getJSONArray(getString(R.string.currency_lower));
+                    co = curr.getJSONObject(index);
+                    currency = co.getString(getString(R.string.name_lower));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -7,6 +7,43 @@
     <string name="my_holidays">My Holidays</string>
     <string name="home">Home</string>
     <string name="sign_out">Sign Out</string>
+    <string name="com">,</string>
+    <string name="com_space">, </string>
+    <string name="new_line">\n</string>
+    <string name="zero">0</string>
+    <string name="slash"> / </string>
+    <string name="out_of_five">/5</string>
+
+    <!--URl Names-->
+    <string name="key">AIzaSyDAiArIeNB9Yyqvf--VRQZQb4Vhx-37b_k</string>
+    <string name="and_key">&amp;key=</string>
+    <string name="and_type">&amp;type=</string>
+    <string name="and_radius">&amp;radius=</string>
+    <string name="location_equals">location=</string>
+    <string name="page_token_equals">pagetoken=</string>
+    <string name="result">result</string>
+    <string name="results">results</string>
+    <string name="next_page_token">next_page_token</string>
+    <string name="place_id">place_id</string>
+
+    <string name="type_aquarium">aquarium</string>
+    <string name="type_amusement">amusement_park</string>
+    <string name="type_bar">bar</string>
+    <string name="type_casino">casino</string>
+    <string name="type_museum">museum</string>
+    <string name="type_shopping">shopping_mall</string>
+    <string name="type_resteraunt">restaurant</string>
+    <string name="type_zoo">zoo</string>
+
+    <!--Variable Names-->
+    <string name="details">details</string>
+    <string name="lat">lat</string>
+    <string name="lon">lon</string>
+    <string name="lng">lng</string>
+    <string name="loc">location</string>
+    <string name="id">id</string>
+    <string name="type">type</string>
+    <string name="coords">coords</string>
 
     <!--Home Screen-->
     <string name="add_holiday">Add Holiday</string>
@@ -19,15 +56,26 @@
     <string name="email">Email Address</string>
     <string name="password">Password</string>
     <string name="forgot_p">Forgotten your password?</string>
+    <string name="enter_email">Please enter an email address.</string>
+    <string name="enter_password">Please enter a password.</string>
+    <string name="short_password">Password is too short.</string>
+    <string name="auth_fail">Authentication failed.</string>
 
     <!--Sign Up Screen-->
     <string name="conf_password">Confirm Password</string>
     <string name="conf_email">Confirm Email</string>
     <string name="name">Name</string>
+    <string name="both_email">Both email addresses need to match.</string>
+    <string name="both_passwords">Both passwords need to match.</string>
+    <string name="all_fields">All fields need to be completed.</string>
+    <string name="password_length">Password needs to be 6 characters or longer.</string>
+    <string name="signup_failed">Signup failed.</string>
 
     <!--Reset Password Screen-->
     <string name="reset_password_text">Enter your email to reset your password.</string>
     <string name="reset_password">Reset Password</string>
+    <string name="sent_instructions">We have sent instructions to reset your password.</string>
+    <string name="failed_to_send">Failed to send.</string>
 
     <!--Holiday Screen-->
     <string name="start_date">Start Date</string>
@@ -38,6 +86,14 @@
     <string name="add_location">Add Location</string>
     <string name="add_start_date">Add Start Date</string>
     <string name="add_end_date">Add End Date</string>
+    <string name="end_after_start">End date needs to be after the start date</string>
+    <string name="date_from">dateFrom</string>
+    <string name="date_to">dateTo</string>
+    <string name="holidays">holidays</string>
+    <string name="completed">completed</string>
+    <string name="location_two_dots">Location: </string>
+    <string name="date_to_two_dots">Date From: </string>
+    <string name="date_from_two_dots">Date To: </string>
 
     <!--Destination Screen-->
     <string name="destination_details">Destination Details</string>
@@ -46,6 +102,14 @@
     <string name="currency">Currency </string>
     <string name="two_dots">:</string>
     <string name="trending">Trending</string>
+    <string name="drawable">drawable</string>
+    <string name="domRepublicCode">do</string>
+    <string name="domrepublicReplace">doo</string>
+    <string name="rest_base_url">https://restcountries.eu/rest/v2/alpha/</string>
+    <string name="capital_lower">capital</string>
+    <string name="region_lower">region</string>
+    <string name="currency_lower">currency</string>
+    <string name="name_lower">name</string>
 
     <!--Profile Screen-->
     <string name="my_profile">My Profile</string>
@@ -78,6 +142,10 @@
     <string name="filter">Filter</string>
     <string name="sort_by">Sort By</string>
     <string name="search_name">Search By Name</string>
+    <string name="google_near_base_url">https://maps.googleapis.com/maps/api/place/nearbysearch/json?</string>
+    <string name="title">title</string>
+    <string name="name_colon">Name: </string>
+    <string name="rating_colon">Rating: </string>
 
     <!--Nearby Details Screen-->
     <string name="place_details">Place Details</string>
@@ -85,4 +153,23 @@
     <string name="address">Address</string>
     <string name="go_website">Go To Website</string>
     <string name="no_website">No Website Available</string>
+    <string name="google_place_base_url">https://maps.googleapis.com/maps/api/place/details/json?placeid=</string>
+    <string name="rating_lower">rating</string>
+    <string name="no_ratings">No Ratings Available.</string>
+    <string name="formatted_address">formatted_address</string>
+    <string name="website">website</string>
+    <string name="geometry">geometry</string>
+
+    <!--Change Email Screen-->
+    <string name="email_updated">Email Updated.</string>
+    <string name="email_not_updated">Unable to update email.</string>
+
+    <!--Change Password Screen-->
+    <string name="password_updated">Password Updated.</string>
+    <string name="password_not_updated">Unable to update Password.</string>
+
+    <!--Firebase Strings-->
+    <string name="users">users</string>
+    <string name="hits">hits</string>
+    <string name="hot_country">HotCountry</string>
 </resources>

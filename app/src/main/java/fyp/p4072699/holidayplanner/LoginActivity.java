@@ -3,6 +3,7 @@ package fyp.p4072699.holidayplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,19 +16,22 @@ public class LoginActivity extends AppController implements View.OnClickListener
     private Button login, signup, forgot;
     private String email, password;
     private EditText em, pa;
+    private int passwordLength = 6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setTitle(R.string.Login);
-        checkUserLoggedIn();
+        //checkUserLoggedIn();
         connectDisplay();
         setListeners();
     }
 
+    //If the user logs in, then the account is deleted, when the app is opened they are still logged in
     protected void checkUserLoggedIn() {
         if (getAuth().getCurrentUser() != null) {
+            Log.d("deleted", getAuth().getCurrentUser().getUid());
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
         }
     }
@@ -55,27 +59,13 @@ public class LoginActivity extends AppController implements View.OnClickListener
         switch (view.getId()) {
             case R.id.button_login:
                 if (email.equals("")) {
-                    sendToast("Please enter an email.");
+                    sendToast(getString(R.string.enter_email));
                     break;
                 } else if (password.equals("")) {
-                    sendToast("Please enter a password.");
+                    sendToast(getString(R.string.enter_password));
                     break;
                 } else {
-                    getAuth().signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (!task.isSuccessful()) {
-                                if (password.length() < 6) {
-                                    sendToast("Password is too short.");
-                                } else {
-                                    sendToast("Authentication Failed.");
-                                }
-                            } else {
-                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                                finish();
-                            }
-                        }
-                    });
+                    checkSignin();
                     break;
                 }
             case R.id.button_signup:
@@ -85,5 +75,23 @@ public class LoginActivity extends AppController implements View.OnClickListener
                 startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
                 break;
         }
+    }
+
+    protected void checkSignin() {
+        getAuth().signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (!task.isSuccessful()) {
+                    if (password.length() < passwordLength) {
+                        sendToast(getString(R.string.short_password));
+                    } else {
+                        sendToast(getString(R.string.auth_fail));
+                    }
+                } else {
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
+                }
+            }
+        });
     }
 }

@@ -57,30 +57,19 @@ public class SignUpActivity extends AppController implements View.OnClickListene
             case R.id.button_signup:
                 getFromScreen();
                 if (!e.equals(ce)) {
-                    sendToast("Both E-Mail Addresses need to match.");
+                    sendToast(getString(R.string.both_email));
                     break;
                 } else if (!p.equals(cp)) {
-                    sendToast("Both Passwords need to match.");
+                    sendToast(getString(R.string.both_passwords));
                     break;
                 } else if (p.equals("") || cp.equals("") || e.equals("") || cp.equals("") || n.equals("")) {
-                    sendToast("All field need to be completed.");
+                    sendToast(getString(R.string.all_fields));
                     break;
                 } else if (p.length() < 6) {
-                    sendToast("Password needs to be 6 characters or longer.");
+                    sendToast(getString(R.string.password_length));
                     break;
                 } else {
-                    getAuth().createUserWithEmailAndPassword(e, p).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (!task.isSuccessful()) {
-                                sendToast("Sign Up Failed.");
-                            } else {
-                                createUser(n);
-                                startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
-                                finish();
-                            }
-                        }
-                    });
+                    checkSignUp();
                     break;
                 }
             case R.id.button_return:
@@ -89,13 +78,29 @@ public class SignUpActivity extends AppController implements View.OnClickListene
         }
     }
 
+    protected void checkSignUp() {
+        getAuth().createUserWithEmailAndPassword(e, p).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (!task.isSuccessful()) {
+                    sendToast(getString(R.string.signup_failed));
+                } else {
+                    createUser(n);
+                    startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        });
+    }
+
     private void createUser(String name) {
-        DatabaseReference mFirebaseDatabase = getDatabase().getReference("users");
+        DatabaseReference mFirebaseDatabase = getDatabase().getReference(getString(R.string.users));
         String userId = null;
         if (getAuth().getCurrentUser() != null) {
             userId = getAuth().getCurrentUser().getUid();
         }
         User user = new User(name);
         mFirebaseDatabase.child(userId).setValue(user);
+        getAuth().signOut();
     }
 }

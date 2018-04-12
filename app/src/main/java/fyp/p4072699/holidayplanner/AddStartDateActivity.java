@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddStartDateActivity extends AppCompatActivity implements View.OnClickListener, DatePicker.OnDateChangedListener {
-    private DatePicker startDate;
-    private Calendar calendar;
     private int day, month, year;
     private Button next, cancel;
     private ArrayList<Integer> details;
@@ -36,11 +34,11 @@ public class AddStartDateActivity extends AppCompatActivity implements View.OnCl
 
     protected void setupCalendar() {
         //Set the calendar to todays date
-        calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance();
         day = calendar.get(Calendar.DAY_OF_MONTH);
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
-        startDate = findViewById(R.id.datePicker_startdate);
+        DatePicker startDate = findViewById(R.id.datePicker_startdate);
         startDate.init(year, month, day, this);
     }
 
@@ -58,7 +56,7 @@ public class AddStartDateActivity extends AppCompatActivity implements View.OnCl
                 details.add(month);
                 details.add(year);
                 startActivity(new Intent(AddStartDateActivity.this, AddEndDateActivity.class)
-                        .putExtra("Details", details));
+                        .putExtra(getString(R.string.details), details));
                 break;
             case R.id.button_cancel:
                 startActivity(new Intent(AddStartDateActivity.this, HomeActivity.class));

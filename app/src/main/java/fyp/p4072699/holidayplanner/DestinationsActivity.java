@@ -25,6 +25,7 @@ public class DestinationsActivity extends AppController implements View.OnClickL
     private PlaceAutocompleteFragment autocompleteFragment;
     private ArrayAdapter ad;
     private ArrayList<String> hotList;
+    private int limit = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +71,8 @@ public class DestinationsActivity extends AppController implements View.OnClickL
         double lng = place.getLatLng().longitude;
 
         startActivity(new Intent(DestinationsActivity.this, DestinationDetailActivity.class)
-                .putExtra("lat", lat)
-                .putExtra("lng", lng));
+                .putExtra(getString(R.string.lat), lat)
+                .putExtra(getString(R.string.lng), lng));
     }
 
     @Override
@@ -80,7 +81,7 @@ public class DestinationsActivity extends AppController implements View.OnClickL
     }
 
     protected void getHotCountry() {
-        getFireDB().collection("HotCountry").orderBy("hits", Query.Direction.DESCENDING).limit(10).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        getFireDB().collection(getString(R.string.hot_country)).orderBy(getString(R.string.hits), Query.Direction.DESCENDING).limit(limit).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot s : queryDocumentSnapshots) {

@@ -92,18 +92,18 @@ public class AppController extends AppCompatActivity implements OnMapReadyCallba
     protected void saveCountry(final String s) {
         getFireDB();
         final Map<String, Object> hits = new HashMap<>();
-        hits.put("hits", 0);
-        fireDB.collection("HotCountry").document(s).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        fireDB.collection(getString(R.string.hot_country)).document(s).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
                     Map<String, Object> data = documentSnapshot.getData();
-                    Long i = (Long) data.get("hits");
+                    Long i = (Long) data.get(getString(R.string.hits));
                     hits.clear();
-                    hits.put("hits", i + 1);
-                    fireDB.collection("HotCountry").document(s).update(hits);
+                    hits.put(getString(R.string.hits), i + 1);
+                    fireDB.collection(getString(R.string.hot_country)).document(s).update(hits);
                 } else {
-                    fireDB.collection("HotCountry").document(s).set(hits);
+                    hits.put(getString(R.string.hits), 0);
+                    fireDB.collection(getString(R.string.hot_country)).document(s).set(hits);
                 }
             }
         });

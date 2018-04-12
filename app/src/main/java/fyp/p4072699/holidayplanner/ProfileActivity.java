@@ -33,7 +33,7 @@ public class ProfileActivity extends AppController implements View.OnClickListen
             userID = getAuth().getCurrentUser().getUid();
         }
 
-        getDatabase().getReference().child("users").child(userID).addListenerForSingleValueEvent(this);
+        getDatabase().getReference().child(getString(R.string.users)).child(userID).addListenerForSingleValueEvent(this);
     }
 
     protected void connectDisplay() {
@@ -70,7 +70,7 @@ public class ProfileActivity extends AppController implements View.OnClickListen
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        String n = dataSnapshot.child("name").getValue(String.class);
+        String n = dataSnapshot.child(getString(R.string.name_lower)).getValue(String.class);
         email.setText(e);
         name.setText(n);
     }

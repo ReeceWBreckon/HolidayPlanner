@@ -14,6 +14,7 @@ public class ForgotPasswordActivity extends AppController implements View.OnClic
     private Button reset, ret;
     private EditText e;
     private String email;
+    private Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,29 +40,33 @@ public class ForgotPasswordActivity extends AppController implements View.OnClic
 
     @Override
     public void onClick(View view) {
-        final Intent i = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
+        i = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
         email = e.getText().toString();
         switch (view.getId()) {
             case R.id.button_reset:
                 if (email.equals("")) {
-                    sendToast("Please enter an email.");
+                    sendToast(getString(R.string.enter_email));
                     break;
                 }
-                getAuth().sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            sendToast("We have sent instructions to reset your password.");
-                        } else {
-                            sendToast("Failed to send.");
-                        }
-                        startActivity(i);
-                    }
-                });
+                sendEmail();
                 break;
             case R.id.button_return:
                 startActivity(i);
                 break;
         }
+    }
+
+    protected void sendEmail() {
+        getAuth().sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    sendToast("");
+                } else {
+                    sendToast(getString(R.string.failed_to_send));
+                }
+                startActivity(i);
+            }
+        });
     }
 }

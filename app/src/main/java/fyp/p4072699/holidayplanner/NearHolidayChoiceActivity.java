@@ -52,36 +52,36 @@ public class NearHolidayChoiceActivity extends AppCompatActivity implements View
         if (view.getId() != R.id.button_return) {
             switch (view.getId()) {
                 case R.id.imageButton_rest:
-                    type = "restaurant";
-                    title = "Nearby Restaurants";
+                    type = getString(R.string.type_resteraunt);
+                    title = getString(R.string.title_resteraunt);
                     break;
                 case R.id.imageButton_amusement:
-                    type = "amusement_park";
-                    title = "Nearby Amusement Parks";
+                    type = getString(R.string.type_amusement);
+                    title = getString(R.string.title_amusement);
                     break;
                 case R.id.imageButton_aquarium:
-                    type = "aquarium";
-                    title = "Nearby Aquariums";
+                    type = getString(R.string.type_aquarium);
+                    title = getString(R.string.title_aquarium);
                     break;
                 case R.id.imageButton_casino:
-                    type = "casino";
-                    title = "Nearby Casinos";
+                    type = getString(R.string.type_casino);
+                    title = getString(R.string.title_casino);
                     break;
                 case R.id.imageButton_museum:
-                    type = "museum";
-                    title = "Nearby Museums";
+                    type = getString(R.string.type_museum);
+                    title = getString(R.string.title_museum);
                     break;
                 case R.id.imageButton_bar:
-                    type = "bar";
-                    title = "Nearby Bars";
+                    type = getString(R.string.type_bar);
+                    title = getString(R.string.title_bar);
                     break;
                 case R.id.imageButton_zoo:
-                    type = "zoo";
-                    title = "Nearby Zoos";
+                    type = getString(R.string.type_zoo);
+                    title = getString(R.string.title_zoo);
                     break;
                 case R.id.imageButton_shopping:
-                    type = "shopping_mall";
-                    title = "Nearby Shops";
+                    type = getString(R.string.type_shopping);
+                    title = getString(R.string.title_shopping);
                     break;
             }
             startAct(type, title);
@@ -91,10 +91,10 @@ public class NearHolidayChoiceActivity extends AppCompatActivity implements View
     }
 
     public void startAct(String t, String title) {
-        String c = getIntent().getStringExtra("coords");
+        String c = getIntent().getStringExtra(getString(R.string.coords));
         Intent i = new Intent(NearHolidayChoiceActivity.this, NearHolidayActivity.class);
-        startActivity(i.putExtra("type", t)
-                .putExtra("coords", c)
-                .putExtra("title", title));
+        startActivity(i.putExtra(getString(R.string.type), t)
+                .putExtra(getString(R.string.coords), c)
+                .putExtra(getString(R.string.title), title));
     }
 }

@@ -13,6 +13,8 @@ import com.google.android.gms.tasks.Task;
 public class ChangePasswordActivity extends AppController implements View.OnClickListener {
     private Button save, cancel;
     private EditText newPass, confPass;
+    private Intent i;
+    private String p, cp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,30 +41,34 @@ public class ChangePasswordActivity extends AppController implements View.OnClic
 
     @Override
     public void onClick(View view) {
-        Intent i = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
-        String p = newPass.getText().toString();
-        String cp = confPass.getText().toString();
+        i = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
+        p = newPass.getText().toString();
+        cp = confPass.getText().toString();
         switch (view.getId()) {
             case R.id.button_save:
-                if (p.equals(cp)) {
-                    getUser().updatePassword(p).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                sendToast("Password Updated.");
-                            } else {
-                                sendToast("Unable to update password.");
-                            }
-                        }
-                    });
-                    startActivity(i);
-                } else {
-                    sendToast("Password do not match.");
-                }
+                updatePassword();
                 break;
             case R.id.button_cancel:
                 startActivity(i);
                 break;
+        }
+    }
+
+    protected void updatePassword() {
+        if (p.equals(cp)) {
+            getUser().updatePassword(p).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        sendToast(getString(R.string.password_updated));
+                    } else {
+                        sendToast(getString(R.string.password_not_updated));
+                    }
+                }
+            });
+            startActivity(i);
+        } else {
+            sendToast(getString(R.string.both_passwords));
         }
     }
 }

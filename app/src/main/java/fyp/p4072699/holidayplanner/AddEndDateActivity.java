@@ -26,7 +26,7 @@ public class AddEndDateActivity extends AppController implements View.OnClickLis
     }
 
     protected void getDetails() {
-        details = getIntent().getIntegerArrayListExtra("Details");
+        details = getIntent().getIntegerArrayListExtra(getString(R.string.details));
         day = details.get(0);
         month = details.get(1);
         year = details.get(2);
@@ -53,23 +53,26 @@ public class AddEndDateActivity extends AppController implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_confirmenddate:
-                if (checkYear() && checkMonth() && checkDay()) {
-                    details.add(day);
-                    details.add(month);
-                    details.add(year);
-                    startActivity(new Intent(AddEndDateActivity.this, AddLocationActivity.class)
-                            .putExtra("Details", details));
-                    break;
-                } else {
-                    sendToast("End date needs to be after the start date");
-                    break;
-                }
+                checkDate();
+                break;
             case R.id.button_cancel:
                 startActivity(new Intent(AddEndDateActivity.this, HomeActivity.class));
                 break;
             case R.id.button_return:
                 startActivity(new Intent(AddEndDateActivity.this, AddStartDateActivity.class));
                 break;
+        }
+    }
+
+    protected void checkDate() {
+        if (checkYear() && checkMonth() && checkDay()) {
+            details.add(day);
+            details.add(month);
+            details.add(year);
+            startActivity(new Intent(AddEndDateActivity.this, AddLocationActivity.class)
+                    .putExtra(getString(R.string.details), details));
+        } else {
+            sendToast(getString(R.string.end_after_start));
         }
     }
 

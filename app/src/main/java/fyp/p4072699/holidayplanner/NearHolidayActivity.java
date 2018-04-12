@@ -24,7 +24,11 @@ import java.util.concurrent.TimeUnit;
 import cz.msebera.android.httpclient.Header;
 
 public class NearHolidayActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, SeekBar.OnSeekBarChangeListener {
-    private String baseURL, URL, location, radius, type, key, name, rating;
+    private String location;
+    private String radius;
+    private String type;
+    private String name;
+    private String rating;
     private Button retur;
     private ListView nearbyLV;
     private ArrayList<String> nearbyList, placeID;
@@ -36,7 +40,7 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_holiday);
-        setTitle(getIntent().getStringExtra("title"));
+        setTitle(getIntent().getStringExtra(getString(R.string.title)));
         connectDisplay();
         setupListView();
         setupURL();
@@ -46,11 +50,9 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
 
     protected void setupURL() {
         //set the url paramaters
-        location = getIntent().getStringExtra("coords");
-        type = getIntent().getStringExtra("type");
+        location = getIntent().getStringExtra(getString(R.string.coords));
+        type = getIntent().getStringExtra(getString(R.string.type));
         radius = String.valueOf(distance.getProgress());
-        key = "AIzaSyDAiArIeNB9Yyqvf--VRQZQb4Vhx-37b_k";
-        baseURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
     }
 
     protected void setupListView() {
@@ -78,8 +80,9 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
     }
 
     protected void getPlaces(String s) {
+        String URL;
         if (s.equals("")) {
-            URL = baseURL + "location=" + location + "&radius=" + radius + "&type=" + type + "&key=" + key;
+            URL = getString(R.string.google_near_base_url) + getString(R.string.location_equals) + location + getString(R.string.and_radius) + radius + getString(R.string.and_type) + type + getString(R.string.and_key) + getString(R.string.key);
             nearbyList.clear();
         } else {
             URL = s;
@@ -90,24 +93,24 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
         client.get(URL, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                JSONObject obj, results = null;
+                JSONObject obj, results;
                 JSONArray res;
                 try {
                     obj = new JSONObject(new String(responseBody));
-                    if (obj.has("next_page_token")) {
-                        pageToken[0] = obj.getString("next_page_token");
+                    if (obj.has(getString(R.string.next_page_token))) {
+                        pageToken[0] = obj.getString(getString(R.string.next_page_token));
                     }
-                    res = obj.getJSONArray("results");
+                    res = obj.getJSONArray(getString(R.string.results));
                     for (int count = 0; count < res.length(); count++) {
                         results = res.getJSONObject(count);
-                        name = results.getString("name");
-                        if (!results.has("rating")) {
-                            rating = "Not Yet Rated";
+                        name = results.getString(getString(R.string.name_lower));
+                        if (!results.has(getString(R.string.rating_lower))) {
+                            rating = getString(R.string.no_ratings);
                         } else {
-                            rating = results.getString("rating") + "/5";
+                            rating = results.getString(getString(R.string.rating_lower)) + getString(R.string.out_of_five);
                         }
-                        nearbyList.add("Name: " + name + "\nRating: " + rating);
-                        placeID.add(results.getString("place_id"));
+                        nearbyList.add(getString(R.string.name_colon) + name + getString(R.string.new_line) + getString(R.string.rating_colon) + rating);
+                        placeID.add(results.getString(getString(R.string.place_id)));
                         ad.notifyDataSetChanged();
                     }
                     if (!pageToken[0].equals("")) {
@@ -116,7 +119,7 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        getPlaces(baseURL + "pagetoken=" + pageToken[0] + "&key=" + key);
+                        getPlaces(getString(R.string.google_near_base_url) + getString(R.string.page_token_equals) + pageToken[0] + getString(R.string.and_key) + getString(R.string.key));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -141,9 +144,9 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         startActivity(new Intent(NearHolidayActivity.this, NearbyDetailsActivity.class)
-                .putExtra("id", placeID.get(i))
-                .putExtra("location", location)
-                .putExtra("type", type));
+                .putExtra(getString(R.string.id), placeID.get(i))
+                .putExtra(getString(R.string.loc), location)
+                .putExtra(getString(R.string.type), type));
     }
 
     @Override

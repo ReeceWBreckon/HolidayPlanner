@@ -13,6 +13,8 @@ import com.google.android.gms.tasks.Task;
 public class ChangeEmailActivity extends AppController implements View.OnClickListener {
     private Button save, cancel;
     private EditText newEmail, confEmail;
+    private String em, cem;
+    private Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,30 +41,34 @@ public class ChangeEmailActivity extends AppController implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        String em = newEmail.getText().toString();
-        String cem = confEmail.getText().toString();
-        Intent i = new Intent(ChangeEmailActivity.this, ProfileActivity.class);
+        em = newEmail.getText().toString();
+        cem = confEmail.getText().toString();
+        i = new Intent(ChangeEmailActivity.this, ProfileActivity.class);
         switch (view.getId()) {
             case R.id.button_save:
-                if (em.equals(cem)) {
-                    getUser().updateEmail(em).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                sendToast("Email Updated.");
-                            } else {
-                                sendToast("Could not update email.");
-                            }
-                        }
-                    });
-                    startActivity(i);
-                } else {
-                    sendToast("Emails do not match.");
-                }
+                updateEmail();
                 break;
             case R.id.button_cancel:
                 startActivity(i);
                 break;
+        }
+    }
+
+    protected void updateEmail() {
+        if (em.equals(cem)) {
+            getUser().updateEmail(em).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        sendToast(getString(R.string.email_updated));
+                    } else {
+                        sendToast(getString(R.string.email_not_updated));
+                    }
+                }
+            });
+            startActivity(i);
+        } else {
+            sendToast(getString(R.string.both_email));
         }
     }
 }
