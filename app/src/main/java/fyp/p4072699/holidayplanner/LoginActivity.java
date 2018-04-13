@@ -88,7 +88,7 @@ public class LoginActivity extends AppController implements View.OnClickListener
                         sendToast(getString(R.string.auth_fail));
                     }
                 } else {
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    startActivity(new Intent(LoginActivity.this, LoadingScreenActivity.class));
                     finish();
                 }
             }

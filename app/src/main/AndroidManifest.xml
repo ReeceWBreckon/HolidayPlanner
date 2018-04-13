@@ -40,6 +40,8 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBLVaRi67XCeOEN2f-PB4CYK5MhiDL2iSU" />
+
+        <activity android:name=".LoadingScreenActivity"></activity>
     </application>
 
 </manifest>

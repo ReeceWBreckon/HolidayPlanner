@@ -172,4 +172,10 @@
     <string name="users">users</string>
     <string name="hits">hits</string>
     <string name="hot_country">HotCountry</string>
+    <string name="to_day">toDay</string>
+    <string name="to_month">toMonth</string>
+    <string name="to_year">toYear</string>
+    <string name="from_day">fromDay</string>
+    <string name="from_month">fromMonth</string>
+    <string name="from_year">fromYear</string>
 </resources>

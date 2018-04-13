@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -16,6 +17,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AppController extends AppCompatActivity implements OnMapReadyCallback {
+public class AppController extends AppCompatActivity implements OnMapReadyCallback, ChildEventListener {
     private NavigationView nav;
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -50,7 +54,6 @@ public class AppController extends AppCompatActivity implements OnMapReadyCallba
     }
 
     public FirebaseUser getUser() {
-
         user = auth.getCurrentUser();
         return user;
     }
@@ -135,5 +138,42 @@ public class AppController extends AppCompatActivity implements OnMapReadyCallba
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, f));
         map.addMarker(new MarkerOptions().position(loc));
         map.getUiSettings().setScrollGesturesEnabled(false);
+    }
+
+    protected void getHolidays() {
+        String userId = null;
+        if (getAuth().getCurrentUser() != null) {
+            userId = getAuth().getCurrentUser().getUid();
+            getDatabase().getReference().child(getString(R.string.holidays)).child(userId).addChildEventListener(this);
+        }
+    }
+
+    @Override
+    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        checkHolidayCompleted(dataSnapshot);
+    }
+
+    @Override
+    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+    }
+
+    @Override
+    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+    }
+
+    @Override
+    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
+    }
+
+    protected void checkHolidayCompleted(DataSnapshot d) {
+        Log.d("checking", "cecking");
     }
 }

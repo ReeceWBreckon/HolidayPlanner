@@ -8,9 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 
 import java.util.ArrayList;
 
@@ -18,7 +16,6 @@ public class MyHolidaysActivity extends AppController implements View.OnClickLis
     private Button home, add;
     private ListView holidayLv;
     private ArrayAdapter ad;
-    private String userId;
     private ArrayList<String> holList, coords;
 
     @Override
@@ -54,44 +51,23 @@ public class MyHolidaysActivity extends AppController implements View.OnClickLis
         holidayLv.setOnItemClickListener(this);
     }
 
-    public void getHolidays() {
-        if (getAuth().getCurrentUser() != null) {
-            userId = getAuth().getCurrentUser().getUid();
+    @Override
+    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        if (dataSnapshot.child(getString(R.string.completed)).getValue(String.class).equals(getString(R.string.zero))) {
+            String to = dataSnapshot.child(getString(R.string.to_day)).getValue(String.class) + getString(R.string.slash)
+                    + dataSnapshot.child(getString(R.string.to_month)).getValue(String.class) + getString(R.string.slash)
+                    + dataSnapshot.child(getString(R.string.to_year)).getValue(String.class);
+            String from = dataSnapshot.child(getString(R.string.from_day)).getValue(String.class) + getString(R.string.slash)
+                    + dataSnapshot.child(getString(R.string.from_month)).getValue(String.class) + getString(R.string.slash)
+                    + dataSnapshot.child(getString(R.string.from_year)).getValue(String.class);
+            String m = getString(R.string.location_two_dots) + dataSnapshot.child(getString(R.string.loc)).getValue(String.class) +
+                    getString(R.string.new_line) + getString(R.string.date_from_two_dots) + from +
+                    getString(R.string.new_line) + getString(R.string.date_to_two_dots) + to;
+            String c = dataSnapshot.child(getString(R.string.lat)).getValue(double.class).toString() + getString(R.string.com) + dataSnapshot.child(getString(R.string.lon)).getValue(double.class).toString();
+            coords.add(c);
+            holList.add(m);
+            ad.notifyDataSetChanged();
         }
-        getDatabase().getReference().child(getString(R.string.holidays)).child(userId).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.child(getString(R.string.completed)).getValue(String.class).equals(getString(R.string.zero))) {
-                    String m = getString(R.string.location_two_dots) + dataSnapshot.child(getString(R.string.loc)).getValue(String.class) +
-                            "\n" + getString(R.string.date_from_two_dots) + dataSnapshot.child(getString(R.string.date_from)).getValue(String.class) +
-                            "\n" + getString(R.string.date_to_two_dots) + dataSnapshot.child(getString(R.string.date_to)).getValue(String.class);
-                    String c = dataSnapshot.child(getString(R.string.lat)).getValue(double.class).toString() + getString(R.string.com) + dataSnapshot.child(getString(R.string.lon)).getValue(double.class).toString();
-                    coords.add(c);
-                    holList.add(m);
-                    ad.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @Override

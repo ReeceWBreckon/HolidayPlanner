@@ -14,7 +14,7 @@ public class ReviewHolidayActivity extends AppController implements View.OnClick
     private TextView startDate, endDate, location;
     private ArrayList<Integer> details;
     private Button save, cancel;
-    private String start, end, loc;
+    private String start, end, loc, toDay, toMonth, toYear, fromDay, fromMonth, fromYear;
     private double lat, lng;
 
     @Override
@@ -34,12 +34,18 @@ public class ReviewHolidayActivity extends AppController implements View.OnClick
         loc = getIntent().getStringExtra(getString(R.string.loc));
         lat = getIntent().getExtras().getDouble(getString(R.string.lat));
         lng = getIntent().getExtras().getDouble(getString(R.string.lng));
+        toDay = String.valueOf(details.get(3));
+        toMonth = String.valueOf(details.get(4) + 1);
+        toYear = String.valueOf(details.get(5));
+        fromDay = String.valueOf(details.get(0));
+        fromMonth = String.valueOf(details.get(1) + 1);
+        fromYear = String.valueOf(details.get(2));
     }
 
     protected void setDisplay() {
         //Set the text to show the holiday details
-        end = (String.valueOf(details.get(3)) + getString(R.string.slash) + String.valueOf(details.get(4) + 1) + getString(R.string.slash) + String.valueOf(details.get(5)));
-        start = (String.valueOf(details.get(0)) + getString(R.string.slash) + String.valueOf(details.get(1) + 1) + getString(R.string.slash) + String.valueOf(details.get(2)));
+        end = toDay + getString(R.string.slash) + toMonth + getString(R.string.slash) + toYear;
+        start = fromDay + getString(R.string.slash) + fromMonth + getString(R.string.slash) + fromYear;
         startDate.setText(start);
         endDate.setText(end);
         location.setText(loc);
@@ -65,7 +71,7 @@ public class ReviewHolidayActivity extends AppController implements View.OnClick
         Intent i = new Intent(ReviewHolidayActivity.this, HomeActivity.class);
         switch (view.getId()) {
             case R.id.button_save:
-                addHoliday(loc, start, end);
+                addHoliday();
                 startActivity(i);
                 break;
             case R.id.button_cancel:
@@ -74,7 +80,7 @@ public class ReviewHolidayActivity extends AppController implements View.OnClick
         }
     }
 
-    private void addHoliday(String l, String f, String t) {
+    private void addHoliday() {
         String userId = null;
 
         if (getAuth().getCurrentUser() != null) {
@@ -84,7 +90,7 @@ public class ReviewHolidayActivity extends AppController implements View.OnClick
         DatabaseReference fDB = getDatabase().getReference(getString(R.string.holidays)).child(userId);
         DatabaseReference r = fDB.push();
 
-        Holiday h = new Holiday(l, f, t, lat, lng, "0");
+        Holiday h = new Holiday(loc, lat, lng, toDay, toMonth, toYear, fromDay, fromMonth, fromYear, "0");
 
         r.setValue(h);
     }

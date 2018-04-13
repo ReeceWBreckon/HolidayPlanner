@@ -1,20 +1,72 @@
 package fyp.p4072699.holidayplanner;
 
 public class Holiday {
-    private String location, dateFrom, dateTo, completed;
+    private String location, toDay, toMonth, toYear, fromDay, fromMonth, fromYear, completed;
     private double lon, lat;
 
-    public Holiday(String l, String from, String to, double la, double lo, String c) {
+    public Holiday(String l, double la, double lo, String td, String tm, String ty, String fd, String fm, String fy, String c) {
         location = l;
-        dateFrom = from;
-        dateTo = to;
         lon = lo;
         lat = la;
+        toDay = td;
+        toMonth = tm;
+        toYear = ty;
+        fromDay = fd;
+        fromMonth = fm;
+        fromYear = fy;
         completed = c;
     }
 
     public Holiday() {
 
+    }
+
+    public String getToDay() {
+        return toDay;
+    }
+
+    public void setToDay(String toDay) {
+        this.toDay = toDay;
+    }
+
+    public String getToMonth() {
+        return toMonth;
+    }
+
+    public void setToMonth(String toMonth) {
+        this.toMonth = toMonth;
+    }
+
+    public String getToYear() {
+        return toYear;
+    }
+
+    public void setToYear(String toYear) {
+        this.toYear = toYear;
+    }
+
+    public String getFromDay() {
+        return fromDay;
+    }
+
+    public void setFromDay(String fromDay) {
+        this.fromDay = fromDay;
+    }
+
+    public String getFromMonth() {
+        return fromMonth;
+    }
+
+    public void setFromMonth(String fromMonth) {
+        this.fromMonth = fromMonth;
+    }
+
+    public String getFromYear() {
+        return fromYear;
+    }
+
+    public void setFromYear(String fromYear) {
+        this.fromYear = fromYear;
     }
 
     public String getCompleted() {
@@ -47,21 +99,5 @@ public class Holiday {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public String getDateFrom() {
-        return dateFrom;
-    }
-
-    public void setDateFrom(String dateFrom) {
-        this.dateFrom = dateFrom;
-    }
-
-    public String getDateTo() {
-        return dateTo;
-    }
-
-    public void setDateTo(String dateTo) {
-        this.dateTo = dateTo;
     }
 }
