@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -20,10 +19,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +38,12 @@ public class AppController extends AppCompatActivity implements OnMapReadyCallba
     private double lat, lng;
     private GoogleMap map;
     private SupportMapFragment mapF;
+    private Calendar calendar = Calendar.getInstance();
+    ;
+
+    public Calendar getCalendar() {
+        return calendar;
+    }
 
     public FirebaseDatabase getDatabase() {
         database = FirebaseDatabase.getInstance();
@@ -174,6 +181,39 @@ public class AppController extends AppCompatActivity implements OnMapReadyCallba
     }
 
     protected void checkHolidayCompleted(DataSnapshot d) {
-        Log.d("checking", "cecking");
+        if (d.child(getString(R.string.completed)).getValue(String.class).equals(getString(R.string.zero))) {
+            if (checkYear(d.child(getString(R.string.to_year)).getValue(String.class))
+                    && checkMonth(d.child(getString(R.string.to_month)).getValue(String.class))
+                    && checkDay(d.child(getString(R.string.to_day)).getValue(String.class))) {
+                // Call the update
+                updateHolidayCompleted(d.getKey());
+            }
+        }
+    }
+
+    protected void updateHolidayCompleted(String s) {
+        String userId = null;
+
+        if (getAuth().getCurrentUser() != null) {
+            userId = getAuth().getCurrentUser().getUid();
+        }
+
+        final Map<String, Object> completed = new HashMap<>();
+        completed.put("completed", "1");
+
+        DatabaseReference fDB = getDatabase().getReference(getString(R.string.holidays)).child(userId).child(s);
+        fDB.updateChildren(completed);
+    }
+
+    protected boolean checkYear(String y) {
+        return Integer.valueOf(y) <= calendar.get(Calendar.YEAR);
+    }
+
+    protected boolean checkMonth(String m) {
+        return Integer.valueOf(m) <= calendar.get(Calendar.MONTH) + 1;
+    }
+
+    protected boolean checkDay(String d) {
+        return Integer.valueOf(d) <= calendar.get(Calendar.DAY_OF_MONTH);
     }
 }
