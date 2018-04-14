@@ -86,6 +86,7 @@
     <string name="add_location">Add Location</string>
     <string name="add_start_date">Add Start Date</string>
     <string name="add_end_date">Add End Date</string>
+    <string name="after_current_date">The start date cannot be before today.</string>
     <string name="end_after_start">End date needs to be after the start date</string>
     <string name="date_from">dateFrom</string>
     <string name="date_to">dateTo</string>

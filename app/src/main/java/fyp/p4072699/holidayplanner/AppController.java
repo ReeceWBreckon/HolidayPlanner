@@ -39,30 +39,25 @@ public class AppController extends AppCompatActivity implements OnMapReadyCallba
     private GoogleMap map;
     private SupportMapFragment mapF;
     private Calendar calendar = Calendar.getInstance();
-    ;
 
     public Calendar getCalendar() {
         return calendar;
     }
 
     public FirebaseDatabase getDatabase() {
-        database = FirebaseDatabase.getInstance();
-        return database;
+        return database = FirebaseDatabase.getInstance();
     }
 
     public FirebaseFirestore getFireDB() {
-        fireDB = FirebaseFirestore.getInstance();
-        return fireDB;
+        return fireDB = FirebaseFirestore.getInstance();
     }
 
     public FirebaseAuth getAuth() {
-        auth = FirebaseAuth.getInstance();
-        return auth;
+        return auth = FirebaseAuth.getInstance();
     }
 
     public FirebaseUser getUser() {
-        user = auth.getCurrentUser();
-        return user;
+        return user = auth.getCurrentUser();
     }
 
     public void sendToast(String s) {
@@ -71,7 +66,6 @@ public class AppController extends AppCompatActivity implements OnMapReadyCallba
 
     public void getDrawer() {
         nav = findViewById(R.id.nav_bar);
-        auth = FirebaseAuth.getInstance();
         nav.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -90,7 +84,7 @@ public class AppController extends AppCompatActivity implements OnMapReadyCallba
                                 startActivity(new Intent(getApplicationContext(), DestinationsActivity.class));
                                 break;
                             case R.id.nav_signout:
-                                auth.signOut();
+                                getAuth().signOut();
                                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                                 break;
                         }
@@ -181,10 +175,13 @@ public class AppController extends AppCompatActivity implements OnMapReadyCallba
     }
 
     protected void checkHolidayCompleted(DataSnapshot d) {
+        int year = Integer.valueOf(d.child(getString(R.string.to_year)).getValue(String.class));
+        int month = Integer.valueOf(d.child(getString(R.string.to_month)).getValue(String.class));
+        int day = Integer.valueOf(d.child(getString(R.string.to_day)).getValue(String.class));
         if (d.child(getString(R.string.completed)).getValue(String.class).equals(getString(R.string.zero))) {
-            if (checkYear(d.child(getString(R.string.to_year)).getValue(String.class))
-                    && checkMonth(d.child(getString(R.string.to_month)).getValue(String.class))
-                    && checkDay(d.child(getString(R.string.to_day)).getValue(String.class))) {
+            if (checkDate(year, calendar.get(Calendar.YEAR))
+                    && checkDate(month, calendar.get(Calendar.MONTH) + 1)
+                    && checkDay(day, calendar.get(Calendar.DAY_OF_MONTH))) {
                 // Call the update
                 updateHolidayCompleted(d.getKey());
             }
@@ -205,15 +202,11 @@ public class AppController extends AppCompatActivity implements OnMapReadyCallba
         fDB.updateChildren(completed);
     }
 
-    protected boolean checkYear(String y) {
-        return Integer.valueOf(y) <= calendar.get(Calendar.YEAR);
+    protected boolean checkDate(int y, int yy) {
+        return y <= yy;
     }
 
-    protected boolean checkMonth(String m) {
-        return Integer.valueOf(m) <= calendar.get(Calendar.MONTH) + 1;
-    }
-
-    protected boolean checkDay(String d) {
-        return Integer.valueOf(d) <= calendar.get(Calendar.DAY_OF_MONTH);
+    protected boolean checkDay(int y, int yy) {
+        return y < yy;
     }
 }

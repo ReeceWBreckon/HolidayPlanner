@@ -75,7 +75,7 @@ public class AddLocationActivity extends AppController implements View.OnClickLi
                 startActivity(new Intent(AddLocationActivity.this, HomeActivity.class));
                 break;
             case R.id.button_return:
-                startActivity(new Intent(AddLocationActivity.this, AddStartDateActivity.class));
+                startActivity(new Intent(AddLocationActivity.this, AddEndDateActivity.class));
                 break;
         }
     }

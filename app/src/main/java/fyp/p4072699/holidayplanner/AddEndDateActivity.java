@@ -53,7 +53,7 @@ public class AddEndDateActivity extends AppController implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_confirmenddate:
-                checkDate();
+                checkDateIsAcceptable();
                 break;
             case R.id.button_cancel:
                 startActivity(new Intent(AddEndDateActivity.this, HomeActivity.class));
@@ -64,8 +64,8 @@ public class AddEndDateActivity extends AppController implements View.OnClickLis
         }
     }
 
-    protected void checkDate() {
-        if (checkYear() && checkMonth() && checkDay()) {
+    protected void checkDateIsAcceptable() {
+        if (checkDate(details.get(2), year) && checkDate(details.get(1), month) && checkDate(details.get(0), day)) {
             details.add(day);
             details.add(month);
             details.add(year);
@@ -74,18 +74,6 @@ public class AddEndDateActivity extends AppController implements View.OnClickLis
         } else {
             sendToast(getString(R.string.end_after_start));
         }
-    }
-
-    protected boolean checkYear() {
-        return year >= details.get(2);
-    }
-
-    protected boolean checkMonth() {
-        return month >= details.get(1);
-    }
-
-    protected boolean checkDay() {
-        return day >= details.get(0);
     }
 
     @Override
