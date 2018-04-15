@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class AddLocationActivity extends AppController implements View.OnClickListener, PlaceSelectionListener, OnMapReadyCallback {
     private Button next, cancel, ret;
     private ArrayList<Integer> details;
-    private String loc;
+    private String loc = "";
     private double lo, la;
     private PlaceAutocompleteFragment autocompleteFragment;
     private View m;
@@ -65,11 +65,7 @@ public class AddLocationActivity extends AppController implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_next:
-                startActivity(new Intent(AddLocationActivity.this, ReviewHolidayActivity.class)
-                        .putExtra(getString(R.string.details), details)
-                        .putExtra(getString(R.string.loc), loc)
-                        .putExtra(getString(R.string.lng), lo)
-                        .putExtra(getString(R.string.lat), la));
+                checkLocation();
                 break;
             case R.id.button_cancel:
                 startActivity(new Intent(AddLocationActivity.this, HomeActivity.class));
@@ -77,6 +73,18 @@ public class AddLocationActivity extends AppController implements View.OnClickLi
             case R.id.button_return:
                 startActivity(new Intent(AddLocationActivity.this, AddEndDateActivity.class));
                 break;
+        }
+    }
+
+    protected void checkLocation() {
+        if (loc.equals("")) {
+            sendToast(getString(R.string.must_have_location));
+        } else {
+            startActivity(new Intent(AddLocationActivity.this, ReviewHolidayActivity.class)
+                    .putExtra(getString(R.string.details), details)
+                    .putExtra(getString(R.string.loc), loc)
+                    .putExtra(getString(R.string.lng), lo)
+                    .putExtra(getString(R.string.lat), la));
         }
     }
 

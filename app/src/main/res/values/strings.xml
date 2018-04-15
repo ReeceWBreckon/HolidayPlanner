@@ -95,6 +95,7 @@
     <string name="location_two_dots">Location: </string>
     <string name="date_to_two_dots">Date From: </string>
     <string name="date_from_two_dots">Date To: </string>
+    <string name="must_have_location">Must select a location.</string>
 
     <!--Destination Screen-->
     <string name="destination_details">Destination Details</string>
