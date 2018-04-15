@@ -98,9 +98,9 @@
 
     <!--Destination Screen-->
     <string name="destination_details">Destination Details</string>
-    <string name="capital">Capital </string>
-    <string name="region">Region </string>
-    <string name="currency">Currency </string>
+    <string name="capital">Capital</string>
+    <string name="region">Region</string>
+    <string name="currency">Currency</string>
     <string name="two_dots">:</string>
     <string name="trending">Trending</string>
     <string name="drawable">drawable</string>
@@ -109,7 +109,7 @@
     <string name="rest_base_url">https://restcountries.eu/rest/v2/alpha/</string>
     <string name="capital_lower">capital</string>
     <string name="region_lower">region</string>
-    <string name="currency_lower">currency</string>
+    <string name="currency_lower">currencies</string>
     <string name="name_lower">name</string>
 
     <!--Profile Screen-->
