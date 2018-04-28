@@ -2,9 +2,7 @@ package fyp.p4072699.holidayplanner;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.gms.common.api.Status;
@@ -19,8 +17,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class DestinationsActivity extends AppController implements View.OnClickListener, PlaceSelectionListener {
-    private Button home;
+public class DestinationsActivity extends AppController implements PlaceSelectionListener {
     private ListView destinationLV;
     private PlaceAutocompleteFragment autocompleteFragment;
     private ArrayAdapter ad;
@@ -46,23 +43,14 @@ public class DestinationsActivity extends AppController implements View.OnClickL
 
     protected void connectDisplay() {
         //Connect to the display
-        home = findViewById(R.id.button_home);
         destinationLV = (ListView) findViewById(R.id.listview_destinations);
         autocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         hotList = new ArrayList<>();
     }
 
     protected void setListeners() {
-        //Set the click listener
-        home.setOnClickListener(this);
-
         //Get the data from the autocomplete
         autocompleteFragment.setOnPlaceSelectedListener(this);
-    }
-
-    @Override
-    public void onClick(View view) {
-        startActivity(new Intent(DestinationsActivity.this, HomeActivity.class));
     }
 
     @Override

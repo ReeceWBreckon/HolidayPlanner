@@ -101,6 +101,5 @@ public class SignUpActivity extends AppController implements View.OnClickListene
         }
         User user = new User(name);
         mFirebaseDatabase.child(userId).setValue(user);
-        getAuth().signOut();
     }
 }

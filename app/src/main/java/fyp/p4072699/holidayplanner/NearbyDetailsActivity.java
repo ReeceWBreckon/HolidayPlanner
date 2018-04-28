@@ -78,7 +78,7 @@ public class NearbyDetailsActivity extends AppController implements View.OnClick
                     setLat(loca.getDouble(getString(R.string.lat)));
                     setLng(loca.getDouble(getString(R.string.lng)));
                     setF(zoom);
-                    formAddress = a1.replace(getString(R.string.com_space), getString(R.string.new_line));
+                    formAddress = a1.replace(", ", getString(R.string.new_line));
                     name.setText(n);
                     rating.setText(r);
                     add1.setText(formAddress);

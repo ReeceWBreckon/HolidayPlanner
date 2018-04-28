@@ -65,15 +65,23 @@ public class AddEndDateActivity extends AppController implements View.OnClickLis
     }
 
     protected void checkDateIsAcceptable() {
-        if (checkDate(details.get(2), year) && checkDate(details.get(1), month) && checkDate(details.get(0), day)) {
-            details.add(day);
-            details.add(month);
-            details.add(year);
-            startActivity(new Intent(AddEndDateActivity.this, AddLocationActivity.class)
-                    .putExtra(getString(R.string.details), details));
+        if (details.get(2) < year) {
+            carryOn();
+        } else if (checkDate(details.get(2), year) && details.get(1) < month) {
+            carryOn();
+        } else if (checkDate(details.get(2), year) && checkDate(details.get(1), month) && checkDate(details.get(0), day)) {
+            carryOn();
         } else {
             sendToast(getString(R.string.end_after_start));
         }
+    }
+
+    protected void carryOn() {
+        details.add(day);
+        details.add(month);
+        details.add(year);
+        startActivity(new Intent(AddEndDateActivity.this, AddLocationActivity.class)
+                .putExtra(getString(R.string.details), details));
     }
 
     @Override

@@ -13,7 +13,7 @@ import com.google.firebase.database.DataSnapshot;
 import java.util.ArrayList;
 
 public class MyHolidaysActivity extends AppController implements View.OnClickListener, AdapterView.OnItemClickListener {
-    private Button home, add;
+    private Button add;
     private ListView holidayLv;
     private ArrayAdapter ad;
     private ArrayList<String> holList, coords;
@@ -32,7 +32,6 @@ public class MyHolidaysActivity extends AppController implements View.OnClickLis
 
     protected void connectDisplay() {
         //Connect to the display
-        home = findViewById(R.id.button_returnhome);
         add = findViewById(R.id.button_addholiday);
         holidayLv = findViewById(R.id.listView_holidays);
         holList = new ArrayList<String>();
@@ -46,7 +45,6 @@ public class MyHolidaysActivity extends AppController implements View.OnClickLis
 
     protected void setListeners() {
         //Set the click listeners
-        home.setOnClickListener(this);
         add.setOnClickListener(this);
         holidayLv.setOnItemClickListener(this);
     }
@@ -72,14 +70,7 @@ public class MyHolidaysActivity extends AppController implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_returnhome:
-                startActivity(new Intent(MyHolidaysActivity.this, HomeActivity.class));
-                break;
-            case R.id.button_addholiday:
-                startActivity(new Intent(MyHolidaysActivity.this, AddStartDateActivity.class));
-                break;
-        }
+        startActivity(new Intent(MyHolidaysActivity.this, AddStartDateActivity.class));
     }
 
     @Override

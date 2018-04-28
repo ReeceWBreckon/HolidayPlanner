@@ -92,9 +92,9 @@
     <string name="date_to">dateTo</string>
     <string name="holidays">holidays</string>
     <string name="completed">completed</string>
-    <string name="location_two_dots">Location: </string>
-    <string name="date_to_two_dots">Date From: </string>
-    <string name="date_from_two_dots">Date To: </string>
+    <string name="location_two_dots">Location:</string>
+    <string name="date_to_two_dots">Date To: </string>
+    <string name="date_from_two_dots">Date From: </string>
     <string name="must_have_location">Must select a location.</string>
 
     <!--Destination Screen-->

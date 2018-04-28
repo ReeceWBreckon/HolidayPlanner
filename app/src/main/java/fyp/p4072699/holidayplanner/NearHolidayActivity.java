@@ -152,7 +152,8 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
         radius = String.valueOf(i);
-        dis.setText(String.valueOf(distance.getProgress()));
+        String distan = String.valueOf(distance.getProgress()) + "Metres";
+        dis.setText(distan);
         getPlaces("");
     }
 
