@@ -1,7 +1,11 @@
 package fyp.p4072699.holidayplanner;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -14,10 +18,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
-public class DestinationsActivity extends AppController implements PlaceSelectionListener {
+public class DestinationsActivity extends AppController implements PlaceSelectionListener, AdapterView.OnItemClickListener {
     private ListView destinationLV;
     private PlaceAutocompleteFragment autocompleteFragment;
     private ArrayAdapter ad;
@@ -51,6 +57,7 @@ public class DestinationsActivity extends AppController implements PlaceSelectio
     protected void setListeners() {
         //Get the data from the autocomplete
         autocompleteFragment.setOnPlaceSelectedListener(this);
+        destinationLV.setOnItemClickListener(this);
     }
 
     @Override
@@ -79,5 +86,18 @@ public class DestinationsActivity extends AppController implements PlaceSelectio
                 }
             }
         });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Geocoder geo = new Geocoder(this);
+        try {
+            List<Address> location = geo.getFromLocationName(hotList.get(i), 1);
+            startActivity(new Intent(DestinationsActivity.this, DestinationDetailActivity.class)
+                    .putExtra(getString(R.string.lat), location.get(0).getLatitude())
+                    .putExtra(getString(R.string.lng), location.get(0).getLongitude()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -95,7 +94,6 @@ public class DestinationDetailActivity extends AppController implements View.OnC
                 JSONObject obj, co;
                 JSONArray curr;
                 try {
-                    Log.d("aaaaaaa", new String(responseBody));
                     obj = new JSONObject(new String(responseBody));
                     capital = obj.getString(getString(R.string.capital_lower));
                     region = obj.getString(getString(R.string.region_lower));
