@@ -10,11 +10,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-public class ProfileActivity extends AppController implements View.OnClickListener, ValueEventListener {
+public class ProfileActivity extends NavController implements View.OnClickListener, ValueEventListener {
     private Button changeEmail, changePassword, signOut;
     private TextView name, email;
-    private String userID;
-    private String e;
+    private String userID, e;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +35,8 @@ public class ProfileActivity extends AppController implements View.OnClickListen
         getDatabase().getReference().child(getString(R.string.users)).child(userID).addListenerForSingleValueEvent(this);
     }
 
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         changeEmail = findViewById(R.id.button_changeemail);
         changePassword = findViewById(R.id.button_changepassword);
         signOut = findViewById(R.id.button_signout);
@@ -45,13 +44,14 @@ public class ProfileActivity extends AppController implements View.OnClickListen
         email = findViewById(R.id.textView_email);
     }
 
+    //Set the click listeners
     protected void setListeners() {
-        //Set the click listeners
         changePassword.setOnClickListener(this);
         changeEmail.setOnClickListener(this);
         signOut.setOnClickListener(this);
     }
 
+    //Check which button was pressed
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -68,6 +68,7 @@ public class ProfileActivity extends AppController implements View.OnClickListen
         }
     }
 
+    //Gets the users name from firebase, set the name and email on screen
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         String n = dataSnapshot.child(getString(R.string.name_lower)).getValue(String.class);

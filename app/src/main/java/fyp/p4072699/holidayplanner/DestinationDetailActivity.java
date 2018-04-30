@@ -21,7 +21,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class DestinationDetailActivity extends AppController implements View.OnClickListener {
+public class DestinationDetailActivity extends NavController implements View.OnClickListener {
     private double lat, lng;
     private Button retur;
     private String country, countryCode, URL, capital, region, currency;
@@ -54,8 +54,8 @@ public class DestinationDetailActivity extends AppController implements View.OnC
         retur = findViewById(R.id.button_retur);
     }
 
+    //Get the country information from the coordiantes
     protected void geoCoder() {
-        //get the country from the coordiantes
         Geocoder geo = new Geocoder(this);
         try {
             List<Address> location = geo.getFromLocation(lat, lng, 1);
@@ -72,14 +72,15 @@ public class DestinationDetailActivity extends AppController implements View.OnC
         }
     }
 
+    //get the coordinates from the previous screen
     protected void setParameters() {
         //Retrieve long/lang from previous screen
         lat = getIntent().getExtras().getDouble(getString(R.string.lat));
         lng = getIntent().getExtras().getDouble(getString(R.string.lng));
     }
 
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         c = findViewById(R.id.textView_country);
         flag = findViewById(R.id.imageView_flag);
         cap = findViewById(R.id.textView_capital);
@@ -87,6 +88,7 @@ public class DestinationDetailActivity extends AppController implements View.OnC
         currenc = findViewById(R.id.textView_currency);
     }
 
+    //Get the required details about the country
     private void getDetails() {
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(URL, new AsyncHttpResponseHandler() {
@@ -116,6 +118,7 @@ public class DestinationDetailActivity extends AppController implements View.OnC
         });
     }
 
+    //Direct to a new page when clicked
     @Override
     public void onClick(View view) {
         startActivity(new Intent(DestinationDetailActivity.this, DestinationsActivity.class));

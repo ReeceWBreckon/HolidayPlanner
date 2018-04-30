@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class ChangeEmailActivity extends AppController implements View.OnClickListener {
+public class ChangeEmailActivity extends NavController implements View.OnClickListener {
     private Button save, cancel;
     private EditText newEmail, confEmail;
     private String em, cem;
@@ -26,20 +26,21 @@ public class ChangeEmailActivity extends AppController implements View.OnClickLi
         setListeners();
     }
 
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         save = findViewById(R.id.button_save);
         cancel = findViewById(R.id.button_cancel);
         newEmail = findViewById(R.id.editText_newEmail);
         confEmail = findViewById(R.id.editText_confirmEmail);
     }
 
+    //Set the click listeners
     protected void setListeners() {
-        //Set the click listeners
         save.setOnClickListener(this);
         cancel.setOnClickListener(this);
     }
 
+    //Check which button was pressed
     @Override
     public void onClick(View view) {
         em = newEmail.getText().toString();
@@ -55,6 +56,7 @@ public class ChangeEmailActivity extends AppController implements View.OnClickLi
         }
     }
 
+    //Update the email stored on firebase
     protected void updateEmail() {
         if (em.equals(cem)) {
             getUser().updateEmail(em).addOnCompleteListener(new OnCompleteListener<Void>() {

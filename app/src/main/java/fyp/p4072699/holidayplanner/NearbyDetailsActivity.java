@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class NearbyDetailsActivity extends AppController implements View.OnClickListener, OnMapReadyCallback {
+public class NearbyDetailsActivity extends NavController implements View.OnClickListener, OnMapReadyCallback {
     private Button retur, web;
     private TextView name, rating, add1;
     private String n, r, a1, w, formAddress, placeID;
@@ -35,12 +35,13 @@ public class NearbyDetailsActivity extends AppController implements View.OnClick
         setListeners();
     }
 
+    //get the id from previous screen
     protected void setupUrl() {
         placeID = getIntent().getStringExtra(getString(R.string.id));
     }
 
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         retur = findViewById(R.id.button_return);
         name = findViewById(R.id.textView_name);
         add1 = findViewById(R.id.textView_address1);
@@ -48,12 +49,13 @@ public class NearbyDetailsActivity extends AppController implements View.OnClick
         web = findViewById(R.id.button_website);
     }
 
+    //Set the click listener
     protected void setListeners() {
-        //Set the click listener
         retur.setOnClickListener(this);
         web.setOnClickListener(this);
     }
 
+    //Get the details about the place
     private void getDetails() {
         String URL = getString(R.string.google_place_base_url) + placeID + getString(R.string.and_key) + getString(R.string.key);
         AsyncHttpClient client = new AsyncHttpClient();
@@ -95,6 +97,7 @@ public class NearbyDetailsActivity extends AppController implements View.OnClick
         });
     }
 
+    //Check which button was clicked
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

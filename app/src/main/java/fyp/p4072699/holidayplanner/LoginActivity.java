@@ -3,7 +3,6 @@ package fyp.p4072699.holidayplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +11,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
-public class LoginActivity extends AppController implements View.OnClickListener {
+public class LoginActivity extends NavController implements View.OnClickListener {
     private Button login, signup, forgot;
     private String email, password;
     private EditText em, pa;
@@ -23,21 +22,12 @@ public class LoginActivity extends AppController implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setTitle(R.string.Login);
-        //checkUserLoggedIn();
         connectDisplay();
         setListeners();
     }
 
-    //If the user logs in, then the account is deleted, when the app is opened they are still logged in
-    protected void checkUserLoggedIn() {
-        if (getAuth().getCurrentUser() != null) {
-            Log.d("deleted", getAuth().getCurrentUser().getUid());
-            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-        }
-    }
-
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         login = findViewById(R.id.button_login);
         signup = findViewById(R.id.button_signup);
         em = (EditText) findViewById(R.id.editText_e);
@@ -45,13 +35,14 @@ public class LoginActivity extends AppController implements View.OnClickListener
         forgot = findViewById(R.id.button_forgot);
     }
 
+    //Set the click listeners
     protected void setListeners() {
-        //Set the click listeners
         forgot.setOnClickListener(this);
         login.setOnClickListener(this);
         signup.setOnClickListener(this);
     }
 
+    //Check which button was clicked
     @Override
     public void onClick(View view) {
         email = em.getText().toString();
@@ -77,6 +68,7 @@ public class LoginActivity extends AppController implements View.OnClickListener
         }
     }
 
+    //Make sure that the login is correct
     protected void checkSignin() {
         getAuth().signInWithEmailAndPassword(email, password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
             @Override

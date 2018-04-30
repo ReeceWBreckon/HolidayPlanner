@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-public class NearHolidayChoiceActivity extends AppController implements View.OnClickListener {
+public class NearHolidayChoiceActivity extends NavController implements View.OnClickListener {
     private ImageButton rest, amuse, aquarium, casino, museum, bar, zoo, shops;
     private Button retur;
 
@@ -20,8 +20,8 @@ public class NearHolidayChoiceActivity extends AppController implements View.OnC
         setListeners();
     }
 
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         rest = findViewById(R.id.imageButton_rest);
         amuse = findViewById(R.id.imageButton_amusement);
         aquarium = findViewById(R.id.imageButton_aquarium);
@@ -33,8 +33,8 @@ public class NearHolidayChoiceActivity extends AppController implements View.OnC
         shops = findViewById(R.id.imageButton_shopping);
     }
 
+    //Set the click listeners
     protected void setListeners() {
-        //Set the click listeners
         rest.setOnClickListener(this);
         amuse.setOnClickListener(this);
         aquarium.setOnClickListener(this);
@@ -46,6 +46,7 @@ public class NearHolidayChoiceActivity extends AppController implements View.OnC
         shops.setOnClickListener(this);
     }
 
+    //Check which image button was pressed
     @Override
     public void onClick(View view) {
         String type = null, title = null;
@@ -90,6 +91,7 @@ public class NearHolidayChoiceActivity extends AppController implements View.OnC
         }
     }
 
+    //To start the image button activity, removes repeated code
     public void startAct(String t, String title) {
         String c = getIntent().getStringExtra(getString(R.string.coords));
         Intent i = new Intent(NearHolidayChoiceActivity.this, NearHolidayActivity.class);

@@ -8,8 +8,7 @@ import android.widget.DatePicker;
 
 import java.util.ArrayList;
 
-public class AddEndDateActivity extends AppController implements View.OnClickListener, DatePicker.OnDateChangedListener {
-    private DatePicker endDate;
+public class AddEndDateActivity extends NavController implements View.OnClickListener, DatePicker.OnDateChangedListener {
     private int day, month, year;
     private Button next, cancel, ret;
     private ArrayList<Integer> details;
@@ -26,6 +25,7 @@ public class AddEndDateActivity extends AppController implements View.OnClickLis
         setClickListeners();
     }
 
+    //Get the details from the previous screen
     protected void getDetails() {
         details = getIntent().getIntegerArrayListExtra(getString(R.string.details));
         day = details.get(0);
@@ -33,23 +33,27 @@ public class AddEndDateActivity extends AppController implements View.OnClickLis
         year = details.get(2);
     }
 
+    //Set the calendar to the start date
     protected void setupCalendar() {
-        endDate = findViewById(R.id.datePicker_enddate);
+        DatePicker endDate = findViewById(R.id.datePicker_enddate);
         endDate.init(year, month, day, this);
     }
 
+    //Connect to the items on the display
     protected void connectDisplay() {
         next = findViewById(R.id.button_confirmenddate);
         cancel = findViewById(R.id.button_cancel);
         ret = findViewById(R.id.button_return);
     }
 
+    //Setup the listeners for clicks
     protected void setClickListeners() {
         next.setOnClickListener(this);
         cancel.setOnClickListener(this);
         ret.setOnClickListener(this);
     }
 
+    //Check which button was clicked
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -65,6 +69,7 @@ public class AddEndDateActivity extends AppController implements View.OnClickLis
         }
     }
 
+    //Make sure that the date is after the start date
     protected void checkDateIsAcceptable() {
         if (details.get(2) < year) {
             carryOn();
@@ -77,6 +82,7 @@ public class AddEndDateActivity extends AppController implements View.OnClickLis
         }
     }
 
+    //Go to the next page
     protected void carryOn() {
         details.add(day);
         details.add(month);
@@ -85,6 +91,7 @@ public class AddEndDateActivity extends AppController implements View.OnClickLis
                 .putExtra(getString(R.string.details), details));
     }
 
+    //Get the date when changed
     @Override
     public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
         year = i;

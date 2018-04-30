@@ -22,12 +22,8 @@ import java.util.concurrent.TimeUnit;
 
 import cz.msebera.android.httpclient.Header;
 
-public class NearHolidayActivity extends AppController implements View.OnClickListener, AdapterView.OnItemClickListener, SeekBar.OnSeekBarChangeListener {
-    private String location;
-    private String radius;
-    private String type;
-    private String name;
-    private String rating;
+public class NearHolidayActivity extends NavController implements View.OnClickListener, AdapterView.OnItemClickListener, SeekBar.OnSeekBarChangeListener {
+    private String location, radius, type, name, rating;
     private Button retur;
     private ListView nearbyLV;
     private ArrayList<String> nearbyList, placeID;
@@ -48,13 +44,14 @@ public class NearHolidayActivity extends AppController implements View.OnClickLi
         getPlaces("");
     }
 
+    //set the url paramaters
     protected void setupURL() {
-        //set the url paramaters
         location = getIntent().getStringExtra(getString(R.string.coords));
         type = getIntent().getStringExtra(getString(R.string.type));
         radius = String.valueOf(distance.getProgress());
     }
 
+    //Setup the list view and adapter, initialise the lists
     protected void setupListView() {
         nearbyList = new ArrayList<>();
         placeID = new ArrayList<>();
@@ -63,22 +60,23 @@ public class NearHolidayActivity extends AppController implements View.OnClickLi
         dis.setText(String.valueOf(distance.getProgress()));
     }
 
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         retur = findViewById(R.id.button_return);
         nearbyLV = findViewById(R.id.listView_nearby);
         distance = findViewById(R.id.seekBar_distance);
         dis = findViewById(R.id.textview_distance);
     }
 
+    //Set the click listeners
     protected void setListeners() {
-        //Set the click listeners
         retur.setOnClickListener(this);
         nearbyLV.setOnItemClickListener(this);
         //Setup the seek bar
         distance.setOnSeekBarChangeListener(this);
     }
 
+    //Get a list of places, takes a string to determine next page or not.
     protected void getPlaces(String s) {
         String URL;
         if (s.equals("")) {
@@ -132,15 +130,13 @@ public class NearHolidayActivity extends AppController implements View.OnClickLi
         });
     }
 
+    //Direct the user back to near holiday choice
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_return:
-                startActivity(new Intent(NearHolidayActivity.this, NearHolidayChoiceActivity.class).putExtra("coords", location));
-                break;
-        }
+        startActivity(new Intent(NearHolidayActivity.this, NearHolidayChoiceActivity.class).putExtra("coords", location));
     }
 
+    //When clicked send the required details forward
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         startActivity(new Intent(NearHolidayActivity.this, NearbyDetailsActivity.class)
@@ -149,6 +145,7 @@ public class NearHolidayActivity extends AppController implements View.OnClickLi
                 .putExtra(getString(R.string.type), type));
     }
 
+    //When the progress bar is changed, update the values
     @Override
     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
         radius = String.valueOf(i);
@@ -157,6 +154,7 @@ public class NearHolidayActivity extends AppController implements View.OnClickLi
         getPlaces("");
     }
 
+    //Change the text as the progress bar is moved
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
         dis.setText(String.valueOf(distance.getProgress()));

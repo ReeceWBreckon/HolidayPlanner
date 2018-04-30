@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class ForgotPasswordActivity extends AppController implements View.OnClickListener {
+public class ForgotPasswordActivity extends NavController implements View.OnClickListener {
     private Button reset, ret;
     private EditText e;
     private String email;
@@ -25,19 +25,20 @@ public class ForgotPasswordActivity extends AppController implements View.OnClic
         setListeners();
     }
 
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         reset = findViewById(R.id.button_reset);
         ret = findViewById(R.id.button_return);
         e = findViewById(R.id.editText_reset);
     }
 
+    //Set the click listeners
     protected void setListeners() {
-        //Set the click listeners
         reset.setOnClickListener(this);
         ret.setOnClickListener(this);
     }
 
+    //Check which button was pressed
     @Override
     public void onClick(View view) {
         i = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
@@ -56,6 +57,7 @@ public class ForgotPasswordActivity extends AppController implements View.OnClic
         }
     }
 
+    //Send the email to reset password
     protected void sendEmail() {
         getAuth().sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

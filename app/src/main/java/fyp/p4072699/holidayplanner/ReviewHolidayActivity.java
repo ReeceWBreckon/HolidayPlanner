@@ -10,7 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
-public class ReviewHolidayActivity extends AppController implements View.OnClickListener {
+public class ReviewHolidayActivity extends NavController implements View.OnClickListener {
     private TextView startDate, endDate, location;
     private ArrayList<Integer> details;
     private Button save, cancel;
@@ -29,8 +29,8 @@ public class ReviewHolidayActivity extends AppController implements View.OnClick
         setListeners();
     }
 
+    //Get the details from the previous screen
     protected void getDetailsFromPrevious() {
-        //Get the details from the previous screen
         details = getIntent().getIntegerArrayListExtra(getString(R.string.details));
         loc = getIntent().getStringExtra(getString(R.string.loc));
         lat = getIntent().getExtras().getDouble(getString(R.string.lat));
@@ -43,8 +43,8 @@ public class ReviewHolidayActivity extends AppController implements View.OnClick
         fromYear = String.valueOf(details.get(2));
     }
 
+    //Set the text to show the holiday details
     protected void setDisplay() {
-        //Set the text to show the holiday details
         end = toDay + getString(R.string.slash) + toMonth + getString(R.string.slash) + toYear;
         start = fromDay + getString(R.string.slash) + fromMonth + getString(R.string.slash) + fromYear;
         startDate.setText(start);
@@ -52,8 +52,8 @@ public class ReviewHolidayActivity extends AppController implements View.OnClick
         location.setText(loc);
     }
 
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         save = findViewById(R.id.button_save);
         cancel = findViewById(R.id.button_cancel);
         startDate = findViewById(R.id.textView_start);
@@ -61,12 +61,13 @@ public class ReviewHolidayActivity extends AppController implements View.OnClick
         location = findViewById(R.id.textView_location);
     }
 
+    //Add the click listeners
     protected void setListeners() {
-        //Add the click listeners
         save.setOnClickListener(this);
         cancel.setOnClickListener(this);
     }
 
+    //Check which button was pressed
     @Override
     public void onClick(View view) {
         Intent i = new Intent(ReviewHolidayActivity.this, HomeActivity.class);
@@ -81,6 +82,7 @@ public class ReviewHolidayActivity extends AppController implements View.OnClick
         }
     }
 
+    //Add the holiday to the firebase database
     private void addHoliday() {
         String userId = null;
 

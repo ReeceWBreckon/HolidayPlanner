@@ -13,7 +13,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.util.ArrayList;
 
-public class AddLocationActivity extends AppController implements View.OnClickListener, PlaceSelectionListener, OnMapReadyCallback {
+public class AddLocationActivity extends NavController implements View.OnClickListener, PlaceSelectionListener, OnMapReadyCallback {
     private Button next, cancel, ret;
     private ArrayList<Integer> details;
     private String loc = "";
@@ -42,8 +42,8 @@ public class AddLocationActivity extends AppController implements View.OnClickLi
         m.setVisibility(View.VISIBLE);
     }
 
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         autocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         next = findViewById(R.id.button_next);
         cancel = findViewById(R.id.button_cancel);
@@ -52,8 +52,8 @@ public class AddLocationActivity extends AppController implements View.OnClickLi
         m = findViewById(R.id.map_location);
     }
 
+    //Set the click listeners
     protected void setListeners() {
-        //Set the click listeners
         next.setOnClickListener(this);
         cancel.setOnClickListener(this);
         ret.setOnClickListener(this);
@@ -62,6 +62,7 @@ public class AddLocationActivity extends AppController implements View.OnClickLi
         autocompleteFragment.setOnPlaceSelectedListener(this);
     }
 
+    //Used to see which button was pressed
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -78,6 +79,7 @@ public class AddLocationActivity extends AppController implements View.OnClickLi
         }
     }
 
+    //Check that the user has selected a location
     protected void checkLocation() {
         if (loc.equals("")) {
             sendToast(getString(R.string.must_have_location));
@@ -90,6 +92,7 @@ public class AddLocationActivity extends AppController implements View.OnClickLi
         }
     }
 
+    //Get the details from the selected location
     @Override
     public void onPlaceSelected(Place place) {
         loc = place.getName().toString();

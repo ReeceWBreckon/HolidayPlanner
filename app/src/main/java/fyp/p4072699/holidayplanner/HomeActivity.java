@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class HomeActivity extends AppController implements View.OnClickListener {
+public class HomeActivity extends NavController implements View.OnClickListener {
     private Button addHoliday, myHolidays, destinations;
 
     @Override
@@ -18,20 +18,21 @@ public class HomeActivity extends AppController implements View.OnClickListener 
         clickListeners();
     }
 
+    //Connect to the display
     public void connectDisplay() {
-        //Connect to the display
         addHoliday = findViewById(R.id.button_addholiday);
         myHolidays = findViewById(R.id.button_viewholidays);
         destinations = findViewById(R.id.button_destinations);
     }
 
+    //Add the click listeners
     public void clickListeners() {
-        //Add the click listeners
         destinations.setOnClickListener(this);
         addHoliday.setOnClickListener(this);
         myHolidays.setOnClickListener(this);
     }
 
+    //Check which button was clicked
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

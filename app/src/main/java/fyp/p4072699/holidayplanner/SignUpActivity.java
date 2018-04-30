@@ -12,7 +12,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.DatabaseReference;
 
-public class SignUpActivity extends AppController implements View.OnClickListener {
+public class SignUpActivity extends NavController implements View.OnClickListener {
     private EditText name, email, confirmEmail, password, confirmPassword;
     private Button signUp, ret;
     private String n, e, ce, p, cp;
@@ -26,8 +26,8 @@ public class SignUpActivity extends AppController implements View.OnClickListene
         setListeners();
     }
 
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         signUp = findViewById(R.id.button_signup);
         ret = findViewById(R.id.button_return);
         name = findViewById(R.id.editText_name);
@@ -37,12 +37,13 @@ public class SignUpActivity extends AppController implements View.OnClickListene
         confirmPassword = findViewById(R.id.editText_confirmpassword);
     }
 
+    //Add the click listeners
     protected void setListeners() {
-        //Add the click listeners
         signUp.setOnClickListener(this);
         ret.setOnClickListener(this);
     }
 
+    //Get the details from the previous screen
     protected void getFromScreen() {
         n = name.getText().toString();
         e = email.getText().toString();
@@ -51,11 +52,13 @@ public class SignUpActivity extends AppController implements View.OnClickListene
         cp = confirmPassword.getText().toString();
     }
 
+    //Check which button was pressed
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_signup:
                 getFromScreen();
+                //Check that the details are acceptable
                 if (!e.equals(ce)) {
                     sendToast(getString(R.string.both_email));
                     break;
@@ -78,6 +81,7 @@ public class SignUpActivity extends AppController implements View.OnClickListene
         }
     }
 
+    //Check that the details were passed to firebase successfully
     protected void checkSignUp() {
         getAuth().createUserWithEmailAndPassword(e, p).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -93,6 +97,7 @@ public class SignUpActivity extends AppController implements View.OnClickListene
         });
     }
 
+    //Add the users name to the firebase database
     private void createUser(String name) {
         DatabaseReference mFirebaseDatabase = getDatabase().getReference(getString(R.string.users));
         String userId = null;

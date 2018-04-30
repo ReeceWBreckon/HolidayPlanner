@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class DestinationsActivity extends AppController implements PlaceSelectionListener, AdapterView.OnItemClickListener {
+public class DestinationsActivity extends NavController implements PlaceSelectionListener, AdapterView.OnItemClickListener {
     private ListView destinationLV;
     private PlaceAutocompleteFragment autocompleteFragment;
     private ArrayAdapter ad;
@@ -42,24 +42,26 @@ public class DestinationsActivity extends AppController implements PlaceSelectio
         getHotCountry();
     }
 
+    //Set the list view and adapter
     protected void setupListView() {
         ad = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, hotList);
         destinationLV.setAdapter(ad);
     }
 
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         destinationLV = (ListView) findViewById(R.id.listview_destinations);
         autocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         hotList = new ArrayList<>();
     }
 
+    //Set the click listeners
     protected void setListeners() {
-        //Get the data from the autocomplete
         autocompleteFragment.setOnPlaceSelectedListener(this);
         destinationLV.setOnItemClickListener(this);
     }
 
+    //Get the details about a place when selected
     @Override
     public void onPlaceSelected(Place place) {
         double lat = place.getLatLng().latitude;
@@ -75,6 +77,7 @@ public class DestinationsActivity extends AppController implements PlaceSelectio
 
     }
 
+    //Get the list of trending countries from firebase
     protected void getHotCountry() {
         getFireDB().collection(getString(R.string.hot_country)).orderBy(getString(R.string.hits), Query.Direction.DESCENDING).limit(limit).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -88,6 +91,7 @@ public class DestinationsActivity extends AppController implements PlaceSelectio
         });
     }
 
+    //When an item in the list view is clicked get the coordinates
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Geocoder geo = new Geocoder(this);

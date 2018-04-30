@@ -35,7 +35,9 @@
         <activity android:name=".NearHolidayActivity" />
         <activity android:name=".NearbyDetailsActivity" />
         <activity android:name=".NearHolidayChoiceActivity" />
-        <activity android:name=".AppController" />
+        <activity android:name=".FirebaseController" />
+        <activity android:name=".MapController" />
+        <activity android:name=".NavController" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -9,7 +9,7 @@ import android.widget.DatePicker;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class AddStartDateActivity extends AppController implements View.OnClickListener, DatePicker.OnDateChangedListener {
+public class AddStartDateActivity extends NavController implements View.OnClickListener, DatePicker.OnDateChangedListener {
     private int day, month, year;
     private Button next, cancel;
     private ArrayList<Integer> details;
@@ -26,15 +26,15 @@ public class AddStartDateActivity extends AppController implements View.OnClickL
         setListeners();
     }
 
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         details = new ArrayList<>();
         next = findViewById(R.id.button_confirmstartdate);
         cancel = findViewById(R.id.button_cancel);
     }
 
+    //Set the calendar to todays date
     protected void setupCalendar() {
-        //Set the calendar to todays date
         c = getCalendar();
         day = c.get(Calendar.DAY_OF_MONTH);
         month = c.get(Calendar.MONTH);
@@ -43,12 +43,13 @@ public class AddStartDateActivity extends AppController implements View.OnClickL
         startDate.init(year, month, day, this);
     }
 
+    //Add the click listeners
     protected void setListeners() {
-        //Add the click listeners
         next.setOnClickListener(this);
         cancel.setOnClickListener(this);
     }
 
+    //Check which button was clicked
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -61,6 +62,7 @@ public class AddStartDateActivity extends AppController implements View.OnClickL
         }
     }
 
+    //Check that the date is after the current date
     protected void checkDateIsAcceptable() {
         if (checkDate(c.get(Calendar.YEAR), year) && checkDate(c.get(Calendar.MONTH), month) && checkDate(c.get(Calendar.DAY_OF_MONTH), day)) {
             details.add(day);
@@ -73,6 +75,7 @@ public class AddStartDateActivity extends AppController implements View.OnClickL
         }
     }
 
+    //Get the date from the calendar
     @Override
     public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
         year = i;

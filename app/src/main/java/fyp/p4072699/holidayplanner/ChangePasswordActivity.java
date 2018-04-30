@@ -10,7 +10,7 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class ChangePasswordActivity extends AppController implements View.OnClickListener {
+public class ChangePasswordActivity extends NavController implements View.OnClickListener {
     private Button save, cancel;
     private EditText newPass, confPass;
     private Intent i;
@@ -26,20 +26,21 @@ public class ChangePasswordActivity extends AppController implements View.OnClic
         setListeners();
     }
 
+    //Connect to the display
     protected void connectDisplay() {
-        //Connect to the display
         save = findViewById(R.id.button_save);
         cancel = findViewById(R.id.button_cancel);
         newPass = findViewById(R.id.editText_newPassword);
         confPass = findViewById(R.id.editText_confirmpassword);
     }
 
+    //Set the click listeners
     protected void setListeners() {
-        //Set the click listeners
         save.setOnClickListener(this);
         cancel.setOnClickListener(this);
     }
 
+    //Check which button was clicked
     @Override
     public void onClick(View view) {
         i = new Intent(ChangePasswordActivity.this, ProfileActivity.class);
@@ -55,6 +56,7 @@ public class ChangePasswordActivity extends AppController implements View.OnClic
         }
     }
 
+    //Update the password on firebase
     protected void updatePassword() {
         if (p.equals(cp)) {
             getUser().updatePassword(p).addOnCompleteListener(new OnCompleteListener<Void>() {
