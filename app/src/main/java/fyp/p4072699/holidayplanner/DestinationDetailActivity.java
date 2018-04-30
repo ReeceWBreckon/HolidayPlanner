@@ -33,6 +33,7 @@ public class DestinationDetailActivity extends AppController implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_destination_detail);
+        getDrawer();
         setTitle(R.string.destination_details);
         connectDisplay();
         setParameters();

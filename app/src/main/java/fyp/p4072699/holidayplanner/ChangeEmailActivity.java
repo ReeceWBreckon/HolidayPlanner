@@ -20,6 +20,7 @@ public class ChangeEmailActivity extends AppController implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_email);
+        getDrawer();
         setTitle(R.string.change_email);
         connectDisplay();
         setListeners();

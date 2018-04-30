@@ -19,6 +19,7 @@ public class AddStartDateActivity extends AppController implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_start_date);
+        getDrawer();
         setTitle(R.string.add_start_date);
         connectDisplay();
         setupCalendar();

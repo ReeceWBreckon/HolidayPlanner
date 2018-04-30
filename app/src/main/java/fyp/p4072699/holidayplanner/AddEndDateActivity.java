@@ -18,6 +18,7 @@ public class AddEndDateActivity extends AppController implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_end_date);
+        getDrawer();
         setTitle(R.string.add_end_date);
         getDetails();
         setupCalendar();

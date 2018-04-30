@@ -26,6 +26,7 @@ public class AddLocationActivity extends AppController implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_location);
+        getDrawer();
         setTitle(R.string.add_location);
         connectDisplay();
         setupMap();

@@ -26,6 +26,7 @@ public class NearbyDetailsActivity extends AppController implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby_details);
+        getDrawer();
         setTitle(R.string.place_details);
         setupUrl();
         connectDisplay();

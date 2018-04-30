@@ -2,7 +2,6 @@ package fyp.p4072699.holidayplanner;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 import cz.msebera.android.httpclient.Header;
 
-public class NearHolidayActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, SeekBar.OnSeekBarChangeListener {
+public class NearHolidayActivity extends AppController implements View.OnClickListener, AdapterView.OnItemClickListener, SeekBar.OnSeekBarChangeListener {
     private String location;
     private String radius;
     private String type;
@@ -40,6 +39,7 @@ public class NearHolidayActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_holiday);
+        getDrawer();
         setTitle(getIntent().getStringExtra(getString(R.string.title)));
         connectDisplay();
         setupListView();

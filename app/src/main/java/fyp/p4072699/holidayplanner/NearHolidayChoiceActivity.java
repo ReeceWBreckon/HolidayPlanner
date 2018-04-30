@@ -14,6 +14,7 @@ public class NearHolidayChoiceActivity extends AppController implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_holiday_choice);
+        getDrawer();
         setTitle(R.string.near_holiday);
         connectDisplay();
         setListeners();

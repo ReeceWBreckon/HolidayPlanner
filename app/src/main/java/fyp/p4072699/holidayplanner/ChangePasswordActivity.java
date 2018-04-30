@@ -20,6 +20,7 @@ public class ChangePasswordActivity extends AppController implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+        getDrawer();
         setTitle(R.string.change_password);
         connectDisplay();
         setListeners();

@@ -21,6 +21,7 @@ public class ReviewHolidayActivity extends AppController implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_holiday);
+        getDrawer();
         setTitle(R.string.review_holiday);
         getDetailsFromPrevious();
         connectDisplay();
