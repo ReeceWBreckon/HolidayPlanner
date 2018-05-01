@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class ChangeEmailActivity extends NavController implements View.OnClickListener {
-    private Button save, cancel;
+public class ChangeEmailActivity extends NavController {
     private EditText newEmail, confEmail;
     private String em, cem;
     private Intent i;
@@ -23,28 +21,19 @@ public class ChangeEmailActivity extends NavController implements View.OnClickLi
         getDrawer();
         setTitle(R.string.change_email);
         connectDisplay();
-        setListeners();
     }
 
     //Connect to the display
     protected void connectDisplay() {
-        save = findViewById(R.id.button_save);
-        cancel = findViewById(R.id.button_cancel);
+        buttonCancel();
+        buttonSave();
         newEmail = findViewById(R.id.editText_newEmail);
         confEmail = findViewById(R.id.editText_confirmEmail);
-    }
-
-    //Set the click listeners
-    protected void setListeners() {
-        save.setOnClickListener(this);
-        cancel.setOnClickListener(this);
     }
 
     //Check which button was pressed
     @Override
     public void onClick(View view) {
-        em = newEmail.getText().toString();
-        cem = confEmail.getText().toString();
         i = new Intent(ChangeEmailActivity.this, ProfileActivity.class);
         switch (view.getId()) {
             case R.id.button_save:
@@ -58,6 +47,8 @@ public class ChangeEmailActivity extends NavController implements View.OnClickLi
 
     //Update the email stored on firebase
     protected void updateEmail() {
+        em = newEmail.getText().toString();
+        cem = confEmail.getText().toString();
         if (em.equals(cem)) {
             getUser().updateEmail(em).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

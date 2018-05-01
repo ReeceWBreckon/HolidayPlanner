@@ -9,10 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
@@ -23,9 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class DestinationsActivity extends NavController implements PlaceSelectionListener, AdapterView.OnItemClickListener {
+public class DestinationsActivity extends NavController implements AdapterView.OnItemClickListener {
     private ListView destinationLV;
-    private PlaceAutocompleteFragment autocompleteFragment;
     private ArrayAdapter ad;
     private ArrayList<String> hotList;
     private int limit = 10;
@@ -39,6 +34,7 @@ public class DestinationsActivity extends NavController implements PlaceSelectio
         connectDisplay();
         setupListView();
         setListeners();
+        setupListener();
         getHotCountry();
     }
 
@@ -51,30 +47,12 @@ public class DestinationsActivity extends NavController implements PlaceSelectio
     //Connect to the display
     protected void connectDisplay() {
         destinationLV = (ListView) findViewById(R.id.listview_destinations);
-        autocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
         hotList = new ArrayList<>();
     }
 
     //Set the click listeners
     protected void setListeners() {
-        autocompleteFragment.setOnPlaceSelectedListener(this);
         destinationLV.setOnItemClickListener(this);
-    }
-
-    //Get the details about a place when selected
-    @Override
-    public void onPlaceSelected(Place place) {
-        double lat = place.getLatLng().latitude;
-        double lng = place.getLatLng().longitude;
-
-        startActivity(new Intent(DestinationsActivity.this, DestinationDetailActivity.class)
-                .putExtra(getString(R.string.lat), lat)
-                .putExtra(getString(R.string.lng), lng));
-    }
-
-    @Override
-    public void onError(Status status) {
-
     }
 
     //Get the list of trending countries from firebase

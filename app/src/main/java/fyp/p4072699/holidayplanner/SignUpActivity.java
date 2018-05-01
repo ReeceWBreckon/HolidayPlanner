@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -12,9 +11,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.DatabaseReference;
 
-public class SignUpActivity extends NavController implements View.OnClickListener {
+public class SignUpActivity extends NavController {
     private EditText name, email, confirmEmail, password, confirmPassword;
-    private Button signUp, ret;
     private String n, e, ce, p, cp;
 
     @Override
@@ -23,24 +21,17 @@ public class SignUpActivity extends NavController implements View.OnClickListene
         setContentView(R.layout.activity_sign_up);
         setTitle(R.string.Sign_up);
         connectDisplay();
-        setListeners();
     }
 
     //Connect to the display
     protected void connectDisplay() {
-        signUp = findViewById(R.id.button_signup);
-        ret = findViewById(R.id.button_return);
+        buttonSignUp();
+        buttonReturn();
         name = findViewById(R.id.editText_name);
         email = findViewById(R.id.editText_e);
         confirmEmail = findViewById(R.id.editText_confirmemail);
         password = findViewById(R.id.editText_p);
         confirmPassword = findViewById(R.id.editText_confirmpassword);
-    }
-
-    //Add the click listeners
-    protected void setListeners() {
-        signUp.setOnClickListener(this);
-        ret.setOnClickListener(this);
     }
 
     //Get the details from the previous screen

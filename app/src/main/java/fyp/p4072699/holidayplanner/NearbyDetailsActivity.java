@@ -17,7 +17,7 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class NearbyDetailsActivity extends NavController implements View.OnClickListener, OnMapReadyCallback {
-    private Button retur, web;
+    private Button web;
     private TextView name, rating, add1;
     private String n, r, a1, w, formAddress, placeID;
     private Float zoom = 15.0f;
@@ -42,7 +42,7 @@ public class NearbyDetailsActivity extends NavController implements View.OnClick
 
     //Connect to the display
     protected void connectDisplay() {
-        retur = findViewById(R.id.button_return);
+        buttonReturn();
         name = findViewById(R.id.textView_name);
         add1 = findViewById(R.id.textView_address1);
         rating = findViewById(R.id.textView_rating);
@@ -51,7 +51,6 @@ public class NearbyDetailsActivity extends NavController implements View.OnClick
 
     //Set the click listener
     protected void setListeners() {
-        retur.setOnClickListener(this);
         web.setOnClickListener(this);
     }
 

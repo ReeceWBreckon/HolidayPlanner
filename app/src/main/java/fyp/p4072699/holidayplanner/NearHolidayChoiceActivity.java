@@ -3,12 +3,10 @@ package fyp.p4072699.holidayplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 public class NearHolidayChoiceActivity extends NavController implements View.OnClickListener {
     private ImageButton rest, amuse, aquarium, casino, museum, bar, zoo, shops;
-    private Button retur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +20,7 @@ public class NearHolidayChoiceActivity extends NavController implements View.OnC
 
     //Connect to the display
     protected void connectDisplay() {
+        buttonReturn();
         rest = findViewById(R.id.imageButton_rest);
         amuse = findViewById(R.id.imageButton_amusement);
         aquarium = findViewById(R.id.imageButton_aquarium);
@@ -29,7 +28,6 @@ public class NearHolidayChoiceActivity extends NavController implements View.OnC
         museum = findViewById(R.id.imageButton_museum);
         bar = findViewById(R.id.imageButton_bar);
         zoo = findViewById(R.id.imageButton_zoo);
-        retur = findViewById(R.id.button_return);
         shops = findViewById(R.id.imageButton_shopping);
     }
 
@@ -42,7 +40,6 @@ public class NearHolidayChoiceActivity extends NavController implements View.OnC
         museum.setOnClickListener(this);
         bar.setOnClickListener(this);
         zoo.setOnClickListener(this);
-        retur.setOnClickListener(this);
         shops.setOnClickListener(this);
     }
 

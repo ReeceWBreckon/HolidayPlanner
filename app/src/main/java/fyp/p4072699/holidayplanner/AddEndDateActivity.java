@@ -3,14 +3,12 @@ package fyp.p4072699.holidayplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 
 import java.util.ArrayList;
 
-public class AddEndDateActivity extends NavController implements View.OnClickListener, DatePicker.OnDateChangedListener {
+public class AddEndDateActivity extends NavController implements DatePicker.OnDateChangedListener {
     private int day, month, year;
-    private Button next, cancel, ret;
     private ArrayList<Integer> details;
 
     @Override
@@ -22,7 +20,6 @@ public class AddEndDateActivity extends NavController implements View.OnClickLis
         getDetails();
         setupCalendar();
         connectDisplay();
-        setClickListeners();
     }
 
     //Get the details from the previous screen
@@ -41,23 +38,16 @@ public class AddEndDateActivity extends NavController implements View.OnClickLis
 
     //Connect to the items on the display
     protected void connectDisplay() {
-        next = findViewById(R.id.button_confirmenddate);
-        cancel = findViewById(R.id.button_cancel);
-        ret = findViewById(R.id.button_return);
-    }
-
-    //Setup the listeners for clicks
-    protected void setClickListeners() {
-        next.setOnClickListener(this);
-        cancel.setOnClickListener(this);
-        ret.setOnClickListener(this);
+        buttonNext();
+        buttonCancel();
+        buttonReturn();
     }
 
     //Check which button was clicked
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_confirmenddate:
+            case R.id.button_next:
                 checkDateIsAcceptable();
                 break;
             case R.id.button_cancel:

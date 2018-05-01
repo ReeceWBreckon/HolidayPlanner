@@ -6,11 +6,9 @@ import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
 
 public class NavController extends FirebaseController {
-    private NavigationView nav;
-
     //Allow the navigation bar to be clickable
     public void getDrawer() {
-        nav = findViewById(R.id.nav_bar);
+        NavigationView nav = findViewById(R.id.nav_bar);
         nav.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override

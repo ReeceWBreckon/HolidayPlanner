@@ -5,7 +5,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,9 +20,8 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class DestinationDetailActivity extends NavController implements View.OnClickListener {
+public class DestinationDetailActivity extends NavController {
     private double lat, lng;
-    private Button retur;
     private String country, countryCode, URL, capital, region, currency;
     private TextView c, cap, reg, currenc;
     private ImageView flag;
@@ -40,18 +38,13 @@ public class DestinationDetailActivity extends NavController implements View.OnC
         geoCoder();
         getDetails();
         setDisplay();
-        setClickListeners();
-    }
-
-    protected void setClickListeners() {
-        retur.setOnClickListener(this);
     }
 
     protected void setDisplay() {
         c.setText(country);
         int flagid = getResources().getIdentifier(countryCode.toLowerCase(), getString(R.string.drawable), getPackageName());
         flag.setImageResource(flagid);
-        retur = findViewById(R.id.button_retur);
+        buttonReturn();
     }
 
     //Get the country information from the coordiantes
@@ -74,7 +67,6 @@ public class DestinationDetailActivity extends NavController implements View.OnC
 
     //get the coordinates from the previous screen
     protected void setParameters() {
-        //Retrieve long/lang from previous screen
         lat = getIntent().getExtras().getDouble(getString(R.string.lat));
         lng = getIntent().getExtras().getDouble(getString(R.string.lng));
     }

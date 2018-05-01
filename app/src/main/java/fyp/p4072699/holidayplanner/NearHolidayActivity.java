@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -22,9 +21,8 @@ import java.util.concurrent.TimeUnit;
 
 import cz.msebera.android.httpclient.Header;
 
-public class NearHolidayActivity extends NavController implements View.OnClickListener, AdapterView.OnItemClickListener, SeekBar.OnSeekBarChangeListener {
+public class NearHolidayActivity extends NavController implements AdapterView.OnItemClickListener, SeekBar.OnSeekBarChangeListener {
     private String location, radius, type, name, rating;
-    private Button retur;
     private ListView nearbyLV;
     private ArrayList<String> nearbyList, placeID;
     private ArrayAdapter ad;
@@ -62,7 +60,7 @@ public class NearHolidayActivity extends NavController implements View.OnClickLi
 
     //Connect to the display
     protected void connectDisplay() {
-        retur = findViewById(R.id.button_return);
+        buttonReturn();
         nearbyLV = findViewById(R.id.listView_nearby);
         distance = findViewById(R.id.seekBar_distance);
         dis = findViewById(R.id.textview_distance);
@@ -70,7 +68,6 @@ public class NearHolidayActivity extends NavController implements View.OnClickLi
 
     //Set the click listeners
     protected void setListeners() {
-        retur.setOnClickListener(this);
         nearbyLV.setOnItemClickListener(this);
         //Setup the seek bar
         distance.setOnSeekBarChangeListener(this);

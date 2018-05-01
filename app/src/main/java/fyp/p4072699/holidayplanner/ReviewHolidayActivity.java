@@ -3,17 +3,15 @@ package fyp.p4072699.holidayplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
-public class ReviewHolidayActivity extends NavController implements View.OnClickListener {
+public class ReviewHolidayActivity extends NavController {
     private TextView startDate, endDate, location;
     private ArrayList<Integer> details;
-    private Button save, cancel;
     private String start, end, loc, toDay, toMonth, toYear, fromDay, fromMonth, fromYear;
     private double lat, lng;
 
@@ -26,7 +24,6 @@ public class ReviewHolidayActivity extends NavController implements View.OnClick
         getDetailsFromPrevious();
         connectDisplay();
         setDisplay();
-        setListeners();
     }
 
     //Get the details from the previous screen
@@ -54,17 +51,11 @@ public class ReviewHolidayActivity extends NavController implements View.OnClick
 
     //Connect to the display
     protected void connectDisplay() {
-        save = findViewById(R.id.button_save);
-        cancel = findViewById(R.id.button_cancel);
+        buttonCancel();
+        buttonSave();
         startDate = findViewById(R.id.textView_start);
         endDate = findViewById(R.id.textView_enddate);
         location = findViewById(R.id.textView_location);
-    }
-
-    //Add the click listeners
-    protected void setListeners() {
-        save.setOnClickListener(this);
-        cancel.setOnClickListener(this);
     }
 
     //Check which button was pressed

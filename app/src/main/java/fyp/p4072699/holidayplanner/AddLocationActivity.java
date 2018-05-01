@@ -3,22 +3,15 @@ package fyp.p4072699.holidayplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-import com.google.android.gms.maps.OnMapReadyCallback;
 
 import java.util.ArrayList;
 
-public class AddLocationActivity extends NavController implements View.OnClickListener, PlaceSelectionListener, OnMapReadyCallback {
-    private Button next, cancel, ret;
+public class AddLocationActivity extends NavController {
     private ArrayList<Integer> details;
     private String loc = "";
     private double lo, la;
-    private PlaceAutocompleteFragment autocompleteFragment;
     private View m;
     private Float zoom = 11.0f;
 
@@ -31,7 +24,7 @@ public class AddLocationActivity extends NavController implements View.OnClickLi
         connectDisplay();
         setupMap();
         hideMap();
-        setListeners();
+        setupListener();
     }
 
     protected void hideMap() {
@@ -44,22 +37,11 @@ public class AddLocationActivity extends NavController implements View.OnClickLi
 
     //Connect to the display
     protected void connectDisplay() {
-        autocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-        next = findViewById(R.id.button_next);
-        cancel = findViewById(R.id.button_cancel);
-        ret = findViewById(R.id.button_return);
+        buttonNext();
+        buttonCancel();
+        buttonReturn();
         details = getIntent().getIntegerArrayListExtra(getString(R.string.details));
         m = findViewById(R.id.map_location);
-    }
-
-    //Set the click listeners
-    protected void setListeners() {
-        next.setOnClickListener(this);
-        cancel.setOnClickListener(this);
-        ret.setOnClickListener(this);
-
-        //Get the value from the autocomplete
-        autocompleteFragment.setOnPlaceSelectedListener(this);
     }
 
     //Used to see which button was pressed
@@ -102,10 +84,5 @@ public class AddLocationActivity extends NavController implements View.OnClickLi
         setLng(lo);
         setF(zoom);
         showMap();
-    }
-
-    @Override
-    public void onError(Status status) {
-
     }
 }

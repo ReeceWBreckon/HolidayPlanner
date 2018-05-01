@@ -3,15 +3,13 @@ package fyp.p4072699.holidayplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class AddStartDateActivity extends NavController implements View.OnClickListener, DatePicker.OnDateChangedListener {
+public class AddStartDateActivity extends NavController implements DatePicker.OnDateChangedListener {
     private int day, month, year;
-    private Button next, cancel;
     private ArrayList<Integer> details;
     private Calendar c;
 
@@ -23,14 +21,13 @@ public class AddStartDateActivity extends NavController implements View.OnClickL
         setTitle(R.string.add_start_date);
         connectDisplay();
         setupCalendar();
-        setListeners();
     }
 
     //Connect to the display
     protected void connectDisplay() {
         details = new ArrayList<>();
-        next = findViewById(R.id.button_confirmstartdate);
-        cancel = findViewById(R.id.button_cancel);
+        buttonNext();
+        buttonCancel();
     }
 
     //Set the calendar to todays date
@@ -43,17 +40,11 @@ public class AddStartDateActivity extends NavController implements View.OnClickL
         startDate.init(year, month, day, this);
     }
 
-    //Add the click listeners
-    protected void setListeners() {
-        next.setOnClickListener(this);
-        cancel.setOnClickListener(this);
-    }
-
     //Check which button was clicked
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_confirmstartdate:
+            case R.id.button_next:
                 checkDateIsAcceptable();
                 break;
             case R.id.button_cancel:

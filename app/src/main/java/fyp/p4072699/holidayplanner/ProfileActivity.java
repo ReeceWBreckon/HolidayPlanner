@@ -3,15 +3,13 @@ package fyp.p4072699.holidayplanner;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-public class ProfileActivity extends NavController implements View.OnClickListener, ValueEventListener {
-    private Button changeEmail, changePassword, signOut;
+public class ProfileActivity extends NavController implements ValueEventListener {
     private TextView name, email;
     private String userID, e;
 
@@ -23,7 +21,6 @@ public class ProfileActivity extends NavController implements View.OnClickListen
         setTitle(R.string.my_profile);
         setupDatabase();
         connectDisplay();
-        setListeners();
     }
 
     protected void setupDatabase() {
@@ -37,18 +34,11 @@ public class ProfileActivity extends NavController implements View.OnClickListen
 
     //Connect to the display
     protected void connectDisplay() {
-        changeEmail = findViewById(R.id.button_changeemail);
-        changePassword = findViewById(R.id.button_changepassword);
-        signOut = findViewById(R.id.button_signout);
+        buttonChangeEmail();
+        buttonChangePassword();
+        buttonSignOut();
         name = findViewById(R.id.textView_name);
         email = findViewById(R.id.textView_email);
-    }
-
-    //Set the click listeners
-    protected void setListeners() {
-        changePassword.setOnClickListener(this);
-        changeEmail.setOnClickListener(this);
-        signOut.setOnClickListener(this);
     }
 
     //Check which button was pressed

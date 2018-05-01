@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 public class ForgotPasswordActivity extends NavController implements View.OnClickListener {
-    private Button reset, ret;
     private EditText e;
     private String email;
     private Intent i;
@@ -22,20 +20,13 @@ public class ForgotPasswordActivity extends NavController implements View.OnClic
         setContentView(R.layout.activity_forgot_password);
         setTitle(R.string.reset_password);
         connectDisplay();
-        setListeners();
     }
 
     //Connect to the display
     protected void connectDisplay() {
-        reset = findViewById(R.id.button_reset);
-        ret = findViewById(R.id.button_return);
+        buttonReturn();
+        buttonReset();
         e = findViewById(R.id.editText_reset);
-    }
-
-    //Set the click listeners
-    protected void setListeners() {
-        reset.setOnClickListener(this);
-        ret.setOnClickListener(this);
     }
 
     //Check which button was pressed
